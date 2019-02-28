@@ -103,4 +103,37 @@ xdebug.max_nesting_level=300
 
 ## 将Apache换成Nginx
 
-待补充。
+现在Nginx已经越来越流行了，尤其是在生产环境中的Linux服务器上。下面简单介绍一些如何在Ubuntu16.04上部署Nginx和PHP。
+
+安装Nginx：
+
+```
+sudo apt-get install nginx
+```
+
+安装`php`和`php-fpm`这两个包：
+
+```
+sudo apt-get install php7.0 php7.0-fpm
+```
+
+安装一些其它的扩展，比如基本都会用到的`php-mbstring`：
+
+```
+sudo apt-get install php7.0-mbstring
+```
+
+修改Nginx配置文件其实非常简单，Nginx已经把需要的配置写好了，只不过给注掉了，没有生效，下面是一个例子：
+
+```
+# server中添加一个默认的index.php文件
+index index.html index.php;
+```
+
+```
+# 开启这些注释，使Nginx能够和php-fpm通信
+location ~ \.php$ {
+  include snippets/fastcgi-php.conf;
+  fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+}
+```
