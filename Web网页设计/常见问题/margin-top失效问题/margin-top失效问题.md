@@ -1,6 +1,6 @@
 # margin-top 失效问题
 
-关于margin-top，在CSS的盒子模型中有这样的一个规定：如果外层节点和它的第一个内层节点都设置了`关于margin-top`属性，且外层节点没有padding或border把他们两个分隔开，内层节点的`margin-top`就会将外层节点的该属性覆盖。
+关于margin-top，在CSS的盒子模型中有这样的一个规定：如果外层节点和它的第一个内层节点都设置了`margin-top`属性，且外层节点没有padding或border把他们两个分隔开，内层节点的`margin-top`就会将外层节点的该属性覆盖。
 
 毫无道理的一个规定。
 
