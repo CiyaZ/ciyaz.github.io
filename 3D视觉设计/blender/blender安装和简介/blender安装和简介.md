@@ -14,4 +14,4 @@ Linux下直接在软件源中安装即可，Ubuntu16.04目前Blender版本为2.7
 
 blender中有很多英文的专有名词，因此建议把界面调成中文。
 
-点击`File->User Preference`，点击`System`标签，勾选`International fonts`，语言选择简体中文，然后选择一个包含中文的字体文件。Linux下字体文件在`/usr/share/fonts`下，建议使用美观、常用的字体。然后依次点选`Interface`，`Tooltips`，`New Data`。如果未设置字体，界面上的文字就会变成方块。
+点击`File->User Preferences`，点击`System`标签，勾选`International fonts`，语言选择简体中文，然后选择一个包含中文的字体文件。Linux下字体文件在`/usr/share/fonts`下，建议使用美观、常用的字体。然后依次点选`Interface`，`Tooltips`，`New Data`。如果未设置字体，界面上的文字就会变成方块。
