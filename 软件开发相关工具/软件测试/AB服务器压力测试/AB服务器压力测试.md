@@ -4,9 +4,9 @@ Apache AB是一个简单的命令行工具，用于模拟多线程HTTP请求，�
 
 ## 安装
 
-Ubuntu系统一般自带AB工具，我们直接使用就行了。
+Ubuntu系统一般自带AB工具，我们直接使用就行了，Windows下可以下载Apache HTTPD的第三方预编译包，其中`bin`目录一般都带有`ab`工具。
 
-注：由于我在Apache官网找了半天也没找到Windows下Apache httpd的安装包，建议使用Linux系统。
+![](res/1.png)
 
 ## 使用方式
 
