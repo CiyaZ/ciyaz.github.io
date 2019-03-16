@@ -1,8 +1,10 @@
 # Logback 日志模块
 
-Java生态中，记录日志有JDK自带的Logger，除此之外，十分常用的第三方日志模块有Log4j，Log4j2，SLF4J，Logback，commons-logging等。
+Java生态中，记录日志有JDK自带的Logger，除此之外，十分常用的第三方日志模块有Log4j，Log4j2，Logback，commons-logging等。
 
-Logback是一个功能丰富的日志库，而且性能不错，是SpringBoot默认集成的日志模块，实际上Log4j实现了SLF4J的API，我们代码中使用`Logger`等类时，你会发现引入的包都是SLF4J的。这里我们简单介绍一下Logback的使用。
+Logback是一个功能丰富的日志库，而且性能不错，是SpringBoot默认集成的日志模块，实际上Logback、Log4j等许多日志库实现了SLF4J的API，我们代码中使用`Logger`等类时，你会发现引入的包都是SLF4J的，它们之间的关系就像接口和实现类一样，使用SLF4J的API而不是直接调用某个日志库的接口也是最为推荐的方式。
+
+这里我们简单介绍一下Logback的使用。
 
 ## 添加Maven依赖
 
