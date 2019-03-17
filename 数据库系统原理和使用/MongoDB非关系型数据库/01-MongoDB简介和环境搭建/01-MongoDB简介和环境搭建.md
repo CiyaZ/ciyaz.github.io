@@ -81,6 +81,8 @@ MongoDB Compass是MongoDB官方推出的数据可视化工具，可以免费用�
 
 ![](res/3.png)
 
+但是在使用Robo3T时，我也遇到过插入大量数据报错的情况，因此最为稳定可靠的还是MongoDB Shell。
+
 ## Ubuntu14.04下mongod服务开机启动
 
 MongoDB不遵循sysV风格的服务配置，所以sysv-rc-conf里找不到MongoDB服务，如果我们想要将MongoDB配置为默认开机启动或者默认不开机启动，需要修改`/etc/init/mongod.conf`：
