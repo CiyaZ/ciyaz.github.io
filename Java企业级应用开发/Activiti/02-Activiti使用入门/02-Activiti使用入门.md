@@ -8,7 +8,7 @@ Activiti Eclipse BPMN2.0 Designer是基于BPMN2.0规范的流程设计工具，�
 
 ![](res/1.png)
 
-插件安装完成后，记得勾选“保存流程图时生成图片”这个功能，流程图是后缀名为`.bpmn`的文件，Activiti勾选后可以同时生成一个`.png`格式的图片。
+插件安装完成后，记得勾选“保存流程图时生成图片”这个功能，流程图是后缀名为`.bpmn`的文件，Activiti勾选后可以同时生成一个`.png`格式的图片。有关Activiti Designer的内容，后续章节介绍。
 
 ## Activiti工程搭建
 
@@ -139,7 +139,7 @@ log4j.appender.stdout.layout.ConversionPattern=[%-5p] %d{yyyy-MM-dd HH:mm:ss,SSS
 
 ### 流程图绘制
 
-这个画流程图的工具使用比较简单，这里就不多做介绍了。
+这个画流程图的工具使用比较简单，具体使用参考专门讲解的相关章节，这里就不多做介绍了。
 
 ![](res/3.png)
 
@@ -165,13 +165,9 @@ private ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 /**
  * 部署流程
  */
-private void deployProcess()
-{
-  Deployment deployment = processEngine.getRepositoryService()
-  .createDeployment()
-  .addClasspathResource("LeaveProcess.bpmn")
-  .addClasspathResource("LeaveProcess.png")
-  .deploy();
+public void deployProcess() {
+  Deployment deployment = processEngine.getRepositoryService().createDeployment().name("LeaveProcess")
+      .addClasspathResource("LeaveProcess.bpmn").addClasspathResource("LeaveProcess.png").deploy();
 
   System.out.println("部署ID " + deployment.getId());
   System.out.println("部署名称 " + deployment.getName());
@@ -186,15 +182,13 @@ private void deployProcess()
 
 ```java
 /**
- * 开始流程
+ * 开启流程
  */
-private void startProcess()
-{
+private void startProcess() {
   String processDefinitionKey = "leaveProcess";
   ProcessInstance processInstance = processEngine.getRuntimeService()
-  .startProcessInstanceByKey(processDefinitionKey);
+      .startProcessInstanceByKey(processDefinitionKey);
 
-  System.out.println("流程部署ID " + processInstance.getDeploymentId());
   System.out.println("流程定义ID " + processInstance.getProcessDefinitionId());
   System.out.println("流程实例ID " + processInstance.getProcessInstanceId());
 }
@@ -207,19 +201,14 @@ private void startProcess()
 ```java
 /**
  * 处理流程
+ *
  * @param assignee 审批人名字
  */
-private void handleProcess(String assignee)
-{
-  List<Task> tasks = processEngine.getTaskService()
-  .createTaskQuery()
-  .taskAssignee(assignee)
-  .list();
+private void handleProcess(String assignee) {
+  List<Task> tasks = processEngine.getTaskService().createTaskQuery().taskAssignee(assignee).list();
 
-  if(tasks != null)
-  {
-    for(Task task : tasks)
-    {
+  if (tasks != null) {
+    for (Task task : tasks) {
       System.out.println("受理人 " + task.getAssignee());
       System.out.println("流程定义ID " + task.getProcessDefinitionId());
       System.out.println("流程实例ID " + task.getProcessInstanceId());
@@ -235,10 +224,12 @@ private void handleProcess(String assignee)
 我们可以按照以下的顺序，分别调用这些方法，查看对应的输出和数据库的变化。
 
 ```java
-App app = new App();
-// app.deployProcess();
-// app.startProcess();
-// app.handleProcess("tom");
-// app.handleProcess("projectManager");
-// app.handleProcess("generalManager");
+public static void main(String[] args) {
+  App app = new App();
+  app.deployProcess();
+  app.startProcess();
+  app.handleProcess("employee");
+  app.handleProcess("projectManager");
+  app.handleProcess("generalManager");
+}
 ```
