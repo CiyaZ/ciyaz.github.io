@@ -1,5 +1,7 @@
 # SS
 
+SS is a socks5 proxy tool.
+
 install
 ```
 pip3 install shadowsocks
@@ -19,7 +21,16 @@ demo config file:
 }
 ```
 
-run ss:
+Notice:Use `local` to config client side ss.
+
+run ss server:
 ```
 ssserver -c [ur_conf_file_path] -d [start|stop]
 ```
+
+run ss client:
+```
+sslocal  -c [ur_conf_file_path] -d [start|stop]
+```
+
+* `--log-file <path>`:write logs to a file for debug
