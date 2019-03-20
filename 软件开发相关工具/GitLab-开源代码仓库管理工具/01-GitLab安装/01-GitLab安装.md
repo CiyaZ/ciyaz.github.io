@@ -55,3 +55,10 @@ sudo gitlab-ctl start
 sudo gitlab-ctl stop
 sudo gitlab-ctl restart
 ```
+
+开机启动启动GitLab服务：
+```
+sudo systemctl enable gitlab-runsvdir.service
+```
+
+如果想要Linux开机后手动启动，可以将它disable掉。
