@@ -26,11 +26,11 @@ Kettle中用“作业”表示一组转换过程，用“转换”表示从一�
 
 Spoon是一个集成开发环境，前面提到我们需要用`.ktr`和`.kjb`定义流程，当然我们不能手写它们，而是以拖流程图的形式进行定义的，这些文件的可视化编辑器就是Spoon。
 
-### Kitchen、Pan、Karte
+### Kitchen、Pan、Carte
 
 我们编写好作业和转换后，当然就要执行它们了。Kitchen和Pan是Kettle中的两个shell脚本，分别用于执行`.kjb`和`.ktr`。它们通常部署在服务器上，我们可以直接用crontab以命令的方式调用这两个工具，实现数据定时抽取。
 
-Karte是另一个稍微复杂的组件，它包含一个HTTP服务端，能够让我们更方便的进行定时执行等任务的部署，使用Karte就不再需要crontab了，十分便于大量Kettle任务的维护。当然如果Kettle的任务并不是很复杂的情况下，crontab更加容易使用（基本了解Linux的运维和开发人员都懂得使用crontab，但真的很少有人听说过Kettle、Karte）。
+Carte是另一个稍微复杂的组件，它包含一个HTTP服务端，能够让我们更方便的进行定时执行等任务的部署，使用Carte就不再需要crontab了，十分便于大量Kettle任务的维护。当然如果Kettle的任务并不是很复杂的情况下，crontab更加容易使用（基本了解Linux的运维和开发人员都懂得使用crontab，但真的很少有人听说过Kettle、Carte）。
 
 ## Kettle安装
 
