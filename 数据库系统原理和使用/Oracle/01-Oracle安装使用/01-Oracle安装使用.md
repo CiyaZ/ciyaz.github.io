@@ -109,6 +109,19 @@ alter user hr identified by hr;
 
 注：`tiger`和`hr`这两个密码你可以设置为其它的。
 
+### 创建一个新用户
+
+如果不希望使用`scott`或`hr`进行练习，可以自己创建一个全新的账户，并为其分配权限。
+
+以`sys`用户的`sysdba`身份登录Oracle数据库，然后执行以下命令：
+```sql
+create user <你的用户名> identified by <你的密码>;
+grant create session to <你的用户名>;
+grant create table to <你的用户名>;
+```
+
+这样配置后，我们就可以使用新用户登入了。该用户具有自己的表和表内数据的增删改查权限。
+
 ## 使用导航猫连接Oracle
 
 导航猫内置了Oracle Instant Client，但是其版本是旧的，我们可以手动指定自己的OCI动态链接库（在Instant Client的安装文件夹中寻找oci.dll）：
