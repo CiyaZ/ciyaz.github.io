@@ -24,6 +24,8 @@ Oracle官网：[https://www.oracle.com/technetwork/cn/database/enterprise-editio
 
 注意：两个`zip`压缩包不是分卷压缩的，必须两个都手动解压一下，否则安装到一半会提示缺少文件导致安装失败。失败了也不要怕，解压后把原来释放的文件删除，在原位置重新安装就行了。
 
+补充：安装时务必选好字符集编码，11g版本默认有两个选项可选，一般都是选择的`AL32UTF8`，选错只能新建虚拟机重装了。
+
 ## 访问Oracle数据库服务器
 
 ### 配置TNS Listener
