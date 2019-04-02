@@ -56,6 +56,8 @@ Oracle官网：[https://www.oracle.com/technetwork/topics/winx64soft-089540.html
 
 注：装Oracle的虚拟机默认安装了客户端和`sqlplus`，不需要手动安装。
 
+补充：Oracle 11g instant client缺少`imp.exe`和`exp.exe`这两个重要的工具，这些工具在完整的数据库安装包中则已经带有，客户端却并没有在任何下载链接中提供，因此针对11g版本只安装客户端是无法导入导出`dmp`格式的数据的。网上说购买正版Oracle服务后有客户端的补丁链接能够下载到，12c版本客户端也包括了这些工具，未尝试。但是，一般我们也不会通过客户端去导入大量数据，因为这会占用巨大的网络带宽，我们一般是把dmp文件上传到服务器上再导入。
+
 ### 使用sqlplus
 
 `sqlplus`是个命令行工具，类似MySQL的`mysql`命令。虚拟机装好Oracle后，会自动设置环境变量，使得我们打开命令提示符后，能够使用该命令。除此之外，我们还可以在开始菜单中找到一个`sqlplus`，它和直接在命令提示符中运行是一样的效果。而其它没有安装过Oracle服务器的客户机则要手动安装Oracle Instant Client（上一节的内容）。
