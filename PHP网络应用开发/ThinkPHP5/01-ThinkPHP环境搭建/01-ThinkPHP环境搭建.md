@@ -4,10 +4,13 @@ ThinkPHP是一个国产的免费开源PHP开发框架，而且已经有些年头
 
 最近ThinkPHP更新到了5.x，做出了很多重大的不兼容更新，可以说是一个打着ThinkPHP旗号的全新框架了。ThinkPHP5据说是「专为API开发而设计的高性能框架」，而且支持composer包管理工具，许多内容都进行了更加现代化的改造，这里我们就简单学习一下ThinkPHP5。
 
-特别提醒：由于是PHP框架，而且是国产的，而且ThinkPHP历史比较久了，无论官网页面还是项目结构画风可能都比较山寨，大家不要被吓跑了，这门技术其实是相当靠谱的。
-
 * ThinkPHP官网：[http://www.thinkphp.cn/](http://www.thinkphp.cn/)
 * 学习手册：[https://www.kancloud.cn/manual/thinkphp5_1](https://www.kancloud.cn/manual/thinkphp5_1)
+
+特别提醒：
+
+1. 由于是PHP框架，而且是国产的，而且ThinkPHP历史比较久了，无论官网页面还是项目结构画风可能都比较山寨，大家不要被吓跑了，这门技术其实是相当靠谱的。
+2. ThinkPHP相关的文档一直比较水，自己学习ThinkPHP前最好有扎实的Web开发基础和大量的优秀框架使用经验，否则上面那个学习手册能看懂算我输。
 
 ## ThinkPHP5.1项目搭建
 
@@ -106,3 +109,17 @@ www  WEB部署目录（或者子目录）
 ├─README.md             README 文件
 ├─think                 命令行入口文件
 ```
+
+## 开启Debug模式
+
+默认情况下，Debug模式是关闭的，我们代码的任何报错都不会显示出来，这显然是不行的。我们可以调整配置文件，开启Debug模式。
+
+在`config/app.php`中配置如下两项为`true`：
+```php
+// 应用调试模式
+'app_debug'              => true,
+// 应用Trace
+'app_trace'              => true,
+```
+
+在生产环境中，记得将其关闭即可。
