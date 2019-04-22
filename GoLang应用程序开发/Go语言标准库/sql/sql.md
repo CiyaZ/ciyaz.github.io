@@ -43,11 +43,11 @@ type Cust struct {
 	CustId   uint64
 	CustName string
 	AreaId   uint64
-	age      uint32
-	sex      string
-	tel      string
-	email    string
-	address  string
+	Age      uint32
+	Sex      string
+	Tel      string
+	Email    string
+	Address  string
 }
 
 func main() {
@@ -62,17 +62,18 @@ func main() {
 		&cust.CustId,
 		&cust.CustName,
 		&cust.AreaId,
-		&cust.age,
-		&cust.sex,
-		&cust.tel,
-		&cust.email,
-		&cust.address)
+		&cust.Age,
+		&cust.Sex,
+		&cust.Tel,
+		&cust.Email,
+		&cust.Address)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
 	fmt.Println(cust)
 
+  db.Close()
 }
 ```
 
@@ -96,11 +97,11 @@ type Cust struct {
 	CustId   uint64
 	CustName string
 	AreaId   uint64
-	age      uint32
-	sex      string
-	tel      string
-	email    string
-	address  string
+	Age      uint32
+	Sex      string
+	Tel      string
+	Email    string
+	Address  string
 }
 
 func main() {
@@ -119,14 +120,15 @@ func main() {
 			&cust.CustId,
 			&cust.CustName,
 			&cust.AreaId,
-			&cust.age,
-			&cust.sex,
-			&cust.tel,
-			&cust.email,
-			&cust.address)
+			&cust.Age,
+			&cust.Sex,
+			&cust.Tel,
+			&cust.Email,
+			&cust.Address)
 		fmt.Println(cust)
 	}
 
+  db.Close()
 }
 ```
 
@@ -172,6 +174,8 @@ func main() {
 
 	newId, err := res.LastInsertId()
 	fmt.Println(newId)
+
+  db.Close()
 }
 ```
 
