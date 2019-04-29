@@ -48,6 +48,23 @@ mvn clean archetype:create-from-project
 
 文件中，可以使用类似`${rootArtifactId}`的形式指定占位变量，文件夹则可以使用类似`__rootArtifactId__`的形式指定，指定位置会在骨架生成项目时替换。
 
+## 使用项目骨架
+
+使用如下命令调用项目骨架：
+
+```
+mvn archetype:generate \
+-DarchetypeCatalog=local \
+-DarchetypeGroupId=<骨架groupId> \
+-DarchetypeArtifactId=<骨架artifactId> \
+-DarchetypeVersion=<骨架版本> \
+-DgroupId=<项目groupId> \
+-DartifactId=<项目artifactId> \
+-DinteractiveMode=false
+```
+
+注意：使用`-DarchetypeCatalog=local`参数主要是因为我在测试骨架的时候，只在本地进行了安装，入过将骨架部署到Nexus或中央仓库，就不需要这个参数了。
+
 ## 主要注意问题
 
 ### Java类的包名
