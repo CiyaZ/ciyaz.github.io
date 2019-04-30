@@ -10,6 +10,11 @@ Logback是一个功能丰富的日志库，而且性能不错，是SpringBoot默
 
 ```xml
 <dependency>
+  <groupId>org.slf4j</groupId>
+  <artifactId>slf4j-api</artifactId>
+  <version>1.7.25</version>
+</dependency>
+<dependency>
   <groupId>ch.qos.logback</groupId>
   <artifactId>logback-core</artifactId>
   <version>1.2.3</version>
@@ -81,7 +86,7 @@ logback.xml
 
 	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder charset="UTF-8">
-			<pattern>%date %highlight(%-5level) %cyan(%logger{5}@[%-4.30thread]) - %msg%n</pattern>
+			<pattern>%yellow(%date) %highlight(%-5level) %cyan(%logger{5}@[%-4.30thread]) - %msg%n</pattern>
 		</encoder>
 	</appender>
 
