@@ -9,3 +9,5 @@
 VM Arguments就是我们需要修改的配置了，这里由于使用了JRebel，因此有一些自动添加的额外配置，我们不用管它，在后面追加一些JVM参数即可。
 
 ![](res/2.png)
+
+额外补充：在使用阿里云的Edas时，用JVM参数指定Pandora容器的taobao-hsf.sar包路径，也是在这里配置的（Edas应用服务器正常作为一个Tomcat7添加就行），阿里云官网介绍使用Tomcat4E插件不知道对应的是哪个上古版本的Eclipse，我们不用管它。
