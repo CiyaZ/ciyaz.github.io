@@ -22,6 +22,8 @@ MongoDB的使用也会有一些限制，例如，它不适合于以下几个地�
 * 传统的商业智能应用：针对特定问题的BI数据库会产生高度优化的查询方式。对于此类应用，数据仓库可能是更合适的选择。
 * 需要SQL的问题。
 
+后期补充：从实际使用的角度来看，总的来说MongoDB能够部分替代MySQL，性能倒是其次，MongoDB的主要优势就是数据结构改动升级更加灵活，而且本身简单易用，集群部署（主从、主备、数据分片）非常简单，在一些需要快速迭代的业务系统中，MongoDB是真的方便了开发者，有效提升了团队生产力。
+
 ## 安装MongoDB
 
 官方文档安装指南：[https://docs.mongodb.com/guides/server/install/](https://docs.mongodb.com/guides/server/install/)
@@ -63,11 +65,20 @@ sudo rm -r /var/log/mongodb
 sudo rm -r /var/lib/mongodb
 ```
 
+## 在Windows上学习MongoDB
+
+Windows下连注册和管理服务都省了，下载MongoDB的压缩包后，直接解压，`bin`目录就是MongoDB提供的所有命令行工具。默认情况下，数据文件位于`C:/data`，我们在启动`mongod`时，可以直接用`--dbpath`指定一个新的目录。
+
 ## 使用shell
 
 我们可以通过MongoDB提供的shell操作MongoDB的数据，这个功能和MySQL的shell类似，只不过MongoDB并不支持SQL语句，而是通过JavaScript语法在shell中进行查询。MongoDB的文档数据结构类似json，因此使用JavaScript进行操作具有天然的优势。
 
 JavaScript的shell并不罕见，Chrome和Node环境都提供这种交互式shell。进入MongoDB的shell，在启动Mongod的情况下，终端中输入`mongo`就可以了。
+
+我们也可以显示指定MongoDB服务器的IP和端口，例如：
+```
+mongo 127.0.0.1:27017
+```
 
 ## MongoDB Compass和Robo 3T
 
