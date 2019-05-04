@@ -8,6 +8,10 @@ Hibernate有详细的中文手册，我们可以下载Hibernate的发行包`hibe
 
 注：最新版的hibernate（版本4+）已经不发布在sourceforge上了，而是在`http://hibernate.org/`，但是这里找不到老版本（3.x）。新版本Hibernate改来改去，一些API一会支持，一会deprecated，当初用的很混乱，所以我就一直用的3.6，也没有任何问题，该版本支持的JPA规范版本是JPA2.0。
 
+## 关于JPA和SpringDataJPA
+
+JPA是JavaEE规范，Hibernate实现了JPA规范，使用JPA和使用Hibernate可以说基本就是一样的，只不过换了套API而已。SpringDataJPA是基于JPA的封装，使用起来非常简单，能够大幅提高开发效率，强烈推荐先学习Hibernate，然后在项目中尝试使用SpringDataJPA。
+
 ## 搭建Hibernate环境
 
 这里我们先搭建一个普通Java工程，后面在相关框架整合章节再介绍web开发环境中，如何搭建Hibernate环境。

@@ -2,6 +2,8 @@
 
 JAXB（Java Architecture for XML Binding），是通过注解实现Java实体类和XML映射的标准API。通过JAXB，能够很容易的实现Java实体类对象序列化为XML，以及XML反序列化为Java实体类对象。
 
+后期补充：由于JAXB属于JavaEE体系，在JDK11中已经移除了JAXB，但你仍可以通过Maven引入该依赖。
+
 ## XML类型和Java类型的映射关系
 
 ![](res/1.png)

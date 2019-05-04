@@ -1,6 +1,6 @@
 # MyBatis简介
 
-MyBatis是一个持久层ORM框架，它的主要功能是根据参数组装SQL语句，以及将SQL执行的结果映射到Java对象。这和Hibernate不同，Hibernate映射的是Java对象和数据库表，SQL语句则是全自动生成的，因此MyBatis能够使开发人员更灵活的使用SQL，更多的利用数据库的功能，如各种数据库的专有特性等，而又不至于直接使用JDBC的繁琐代码中。
+MyBatis是一个持久层ORM框架，它的主要功能是根据参数组装SQL语句，以及将SQL执行的结果映射到Java对象。这和Hibernate不同，Hibernate映射的是Java对象和数据库表，SQL语句则是全自动生成的，因此MyBatis能够使开发人员更灵活的使用SQL，更多的利用数据库的功能，如各种数据库的专有特性等，而又不至于陷入直接使用JDBC的繁琐代码中。
 
 ## MyBatis简单使用
 

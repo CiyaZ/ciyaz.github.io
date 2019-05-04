@@ -2,6 +2,8 @@
 
 struts2是一个优秀的JavaWeb表现层MVC框架，由apache基于struts1和webwork框架开发。struts2使用POJO作为控制器Action，不与Servlet的API耦合，支持更多视图技术（JSP，Velocity，FreeMarker等）。基于SpringAOP思想的拦截器机制，更易扩展。除此之外，struts2还简化了极其常用的后台输入校验功能，简化了表现层的编程。
 
+后期补充：由于天时地利人和等种种原因，Struts2现在可以说是已经彻底淘汰了，但我还是强烈建议Java开发人员仔细学习一下这个框架，顺便再了解一下这个框架是怎么凉的，会有不少收获。
+
 ## struts2环境搭建
 
 struts2发行包下载地址：[http://struts.apache.org/download.cgi](http://struts.apache.org/download.cgi)
