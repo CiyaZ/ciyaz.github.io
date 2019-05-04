@@ -8,6 +8,8 @@ Logback是一个功能丰富的日志库，而且性能不错，是SpringBoot默
 
 ## 添加Maven依赖
 
+我们直接将slf4j和logback的依赖引入项目即可。
+
 ```xml
 <dependency>
   <groupId>org.slf4j</groupId>
@@ -32,6 +34,44 @@ Logback是一个功能丰富的日志库，而且性能不错，是SpringBoot默
 ```
 
 ![](res/1.png)
+
+### 日志模块冲突的解决
+
+很多库都依赖一个特定的日志模块，这是相当糟糕的设计，比如ZooKeeper的客户端包就自行依赖了`log4j`，而我们整个项目都是Logback的，我们不能让这些模块自己搞特殊，好在`slf4j`提供了`bridge`包能够解决这个问题。
+
+以ZooKeeper为例，我们通过依赖分析，发现它自带了`log4j`和`slf4j`的绑定包，我们把这几个依赖直接排除。
+```xml
+<dependency>
+  <groupId>org.apache.zookeeper</groupId>
+  <artifactId>zookeeper</artifactId>
+  <version>3.4.10</version>
+  <exclusions>
+    <exclusion>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+    </exclusion>
+    <exclusion>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </exclusion>
+    <exclusion>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+    </exclusion>
+  </exclusions>
+</dependency>
+```
+
+然后引入`bridge`兼容包：
+```xml
+<dependency>
+  <groupId>org.slf4j</groupId>
+  <artifactId>log4j-over-slf4j</artifactId>
+  <version>1.7.25</version>
+</dependency>
+```
+
+之后再手动引入`slf4j-api`，`logback`等依赖即可。
 
 ## Logback简单使用
 
