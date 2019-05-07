@@ -1,8 +1,8 @@
 # Nginx安装和简介
 
-Nginx是一个开源、高性能、可靠的HTTP中间件和代理服务。
+Nginx是一个开源、高性能、可靠的HTTP中间件和代理服务。不仅如此，对于我们开发人员来说，Nginx更是一个趁手的工具。至于缺点，似乎和很多Linux平台下的软件一样，就是配置文件的语法太过难用了（这里不得不吐槽一下国内的各种博客上有关Nginx的内容，大部分都是直接扔出一坨配置，没有任何详细说明，代码乱七八糟堆在一起也不格式化，看得人一头雾水）。
 
-其他同类产品有：Microsoft IIS，Apache httpd，Google GWS等。和同类产品相比，Nginx主要有以下优点：
+Nginx的同类产品有：Microsoft IIS，Apache httpd，Google GWS等。和同类产品相比，Nginx主要有以下优点：
 
 1. 基于BSD协议开源
 2. 轻量级，模块化的设计
@@ -65,3 +65,7 @@ configure arguments: --with-cc-opt='-g -O2 -fPIE -fstack-protector-strong -Wform
 ```
 
 其中包含了很多信息：Nginx的版本，编译器参数，编译的模块（`--withs`指定的）等等。
+
+## 关于在Windows上使用Nginx
+
+Nginx提供了针对Windows操作系统的预编译版本，直接去官网下载即可，如果我们的开发电脑是Windows系统，也能同样享受到这个方便的工具。但是，Nginx在Windows系统上似乎不是很稳定，我已经遇到无数次启动莫名报错，进程关不掉，正确的配置却直接无法启动，性能莫名其妙出问题等状况，在Windows服务器的生产环境中使用Nginx还有待观察（其实IIS也足够好了）。
