@@ -16,6 +16,8 @@ Spring的核心功能之一就是依赖注入（DI），所谓的依赖注入，
 
 有关自动装配和显示装配，两者都需要在Java代码或XML中进行一些配置（自动装配需要配置package扫描）。虽然《Spring in Action》中作者极力推荐使用Java代码进行配置，但是我看过的项目都是使用XML配置的，我做的项目也是使用XML配置的，这里本着实用的原则就不介绍后者了。
 
+后期补充：JavaConfig在`Java企业级应用开发/SpringCore/04-使用JavaConfig`中介绍。
+
 ## 注解实现自动化装配Bean
 
 自动装配的步骤：
