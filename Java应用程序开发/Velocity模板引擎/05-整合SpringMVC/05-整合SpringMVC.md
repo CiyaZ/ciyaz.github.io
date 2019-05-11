@@ -2,6 +2,8 @@
 
 springMVC是时下非常流行的表现层MVC框架，尤其是使用注解驱动配置时，具有简单易用，开发效率高的特点。spring MVC支持使用velocity作为视图模板。这里使用spring3.2.17进行示范，由于本教程重点讲解的是velocity，因此对于spring相关的内容并不会做过多解释，读者可以参阅spring的官方文档，spring的文档非常详细。
 
+## Velocity依赖
+
 首先新建一个Maven工程，使用maven-archetype-webapp模板。在`pom.xml`中添加以下依赖：
 
 ```xml
@@ -77,6 +79,8 @@ springMVC是时下非常流行的表现层MVC框架，尤其是使用注解驱�
    </plugins>
 </build>
 ```
+
+## 相关配置文件
 
 在WEB-INF/web.xml内配置以下信息：
 
@@ -182,6 +186,8 @@ demo-servlet.xml
 input.encoding=UTF-8
 output.encoding=UTF-8
 ```
+
+## 代码编写
 
 好了，一切准备就绪。现在编写一个spring MVC的控制器。
 
@@ -428,3 +434,9 @@ public class IndexController
 当校验成功后，成功登陆主页
 
 ![](res/3.png)
+
+## 后期补充：关于Spring5
+
+在最新版本的Spring5/SpringBoot中，已经移除了Velocity的API，也就是说，Spring未来不会再支持Velocity这个模板引擎了！
+
+说实话Velocity确实不适合做网页的模板引擎，因为语法太过奇怪而且小众了，前端开发人员肯定是无法接受的，目前来看，Java能够集成的页面模板引擎中，Thymeleaf是最好的选择（JSP就把它丢进历史的博物馆吧）。但是Velocity在其它需要模板的领域，比如作为一个HTML邮件模板，还是无可替代的。
