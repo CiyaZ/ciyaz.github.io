@@ -63,7 +63,7 @@ Activiti Eclipse BPMN2.0 Designer是基于BPMN2.0规范的流程设计工具，�
 </dependency>
 ```
 
-其中包括Activiti、Spring、Hikari连接池、MySQL驱动、SLF4J日志。除了连接池可以替换为其它的，其余依赖都是必须的。
+其中包括Activiti、Spring、Hikari连接池、MySQL驱动、SLF4J日志。其中，连接池，数据库，日志组件都可以替换为你熟悉的其他库。
 
 ## Activiti配置文件
 
