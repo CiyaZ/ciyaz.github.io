@@ -26,6 +26,18 @@ JavaFX由于几乎没什么公司用，而且大部分人都是面向RMB编程�
 
 用`e(fx)clipse`可以直接创建基于Eclipse的JavaFX项目，但我们一般使用Maven或Gradle进行依赖管理和项目构建。
 
+## 安装SceneBuilder
+
+SceneBuilder是JavaFX中，布局文件FXML的设计器，FXML类似HTML，对应控件的API有很多属性可配置，我们没必要把这些属性都记住，需要时在SceneBuilder中拖拽设置就行了。
+
+[https://gluonhq.com/products/scene-builder/](https://gluonhq.com/products/scene-builder/)
+
+安装好SceneBuilder后，在Eclipse中配置一下SceneBuilder的安装路径，我们就可以在Eclipse中直接右键用设计器打开FXML了。
+
+![](res/2.png)
+
+注意：下载的SceneBuilder版本要和我们开发的JavaFX版本对应。
+
 ## 创建基于Maven的项目
 
 我们这里直接用`maven-archetype-quickstart`创建一个Maven项目。要注意的是，Maven对于JDK11模块化系统各种插件支持还不是太成熟，随着时间的推移，下面的构建配置可能不再是最佳的办法。
@@ -126,7 +138,7 @@ public class App extends Application {
 
 上面代码只是一个例子，界面上会显示一个包含一段文字的`Label`。
 
-JDK11之前，直接运行下面代码的`main`函数就可以了，但是JDK11由于模块化和JavaFXSDK被拆分了的原因造成了一些bug，我们需要额外写一个`Main`调用`App`的入口函数，我们不用在意这些细节。
+JDK11之前，假设我们将上面代码中`appMain`方法改为`main`方法，直接运行上面代码的`main`函数就可以了，但是JDK11由于模块化和JavaFXSDK被拆分了的原因造成了一些bug，我们需要额外写一个`Main`调用`App`的入口函数。
 
 Main.java
 ```java
