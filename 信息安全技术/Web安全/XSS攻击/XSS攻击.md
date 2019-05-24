@@ -67,8 +67,10 @@ document.appendChild(img);
 
 ![](res/8.png)
 
-注：HTML过滤并不是最保险的方式，网上有很多针对某种过滤规则，声称能绕过过滤的方法。
+注：仅适用HTML过滤可能并不是最保险的方式，网上有很多针对某种过滤规则，声称能绕过过滤的方法，也有些过滤库声称能100%杜绝XSS，但不怕一万就怕万一。
 
 ### HttpOnly标记
 
-HTTP协议支持`HttpOnly`标记，假如浏览器实现上没有任何bug，它能保证JavaScript无法以任何方式读取Cookie，只有HTTP请求才能带上Cookie，这个基本杜绝了窃取`sessionId`形式的XSS，因为默认PHP的`PHPSESSID`就是`HttpOnly`的。但不排除有些网站会用非`HttpOnly`记录一些其它有价值的数据。
+HTTP协议支持`HttpOnly`标记，假如浏览器实现上没有任何bug，它能保证JavaScript无法以任何方式读取`HttpOnly`的Cookie，只有HTTP请求才能带上Cookie，这个基本杜绝了窃取`sessionId`形式的XSS，默认PHP的`PHPSESSID`就是`HttpOnly`的，之前我们演示的程序如果不手动把`HttpOnly`去掉是根本不可能被攻击成功的。
+
+尽管如此，我们仍不排除有些网站会用非`HttpOnly`记录一些其它有价值的数据，除此之外，前后端分离开发时（Vue/React/Angular）一定要留心，很多新手开发者为了和移动客户端的登录机制兼容，需要手动设置一个`Cookie`存储登录凭证而忘记了`HttpOnly`，此外存储在`Local Storage`、`Session Storage`、`IndexedDB`、`WebSQL`中也没有任何XSS保护，在HTML标准于安全方面变的更加完善之前，像登录凭证这种数据不应出现在这些地方。
