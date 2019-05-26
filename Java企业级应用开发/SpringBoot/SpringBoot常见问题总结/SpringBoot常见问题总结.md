@@ -75,3 +75,31 @@ SpringBoot支持Servlet3注解，直接自动注册监听器和过滤器，但�
 ```
 
 然后我们定义的Listener或Filter使用对应的注解标注即可使用了。如果使用Servlet容器部署，启动类是不起作用的，只要我们的容器支持Servlet3.0注解就行了。
+
+## 将Servlet容器改为Undertow
+
+SpringBoot默认使用Tomcat作为Servlet容器，Tomcat性能不错，而且功能强大，代码健壮性良好，但是Undertow源码更轻量，性能比Tomcat还要好一些。将容器改为Undertow，首先要排除Tomcat的依赖：
+
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-web</artifactId>
+  <exclusions>
+    <exclusion>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+    </exclusion>
+  </exclusions>
+</dependency>
+```
+
+然后加入Undertow的起步依赖：
+
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-undertow</artifactId>
+</dependency>
+```
+
+其余都无需改动。
