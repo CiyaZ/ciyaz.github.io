@@ -22,7 +22,7 @@ Redis是一款使用内存存储的高性能非关系型数据库，遵循BSD协
 sudo apt-get install redis-server
 ```
 
-Ubuntu软件源中的Redis版本较旧，这里安装的是3.0.6版本，如果想要安装最新版本的Redis，需要从Redis官网下载源码编译安装，这里就不具体介绍了。
+Ubuntu软件源中的Redis版本较旧，这里安装的是3.0.6版本，如果想要安装最新版本的Redis，需要从Redis官网下载源码编译安装（其实很简单，Redis不需要什么特别复杂的依赖配置，进目录make就行），这里就不具体介绍了。
 
 ## 在终端中使用Redis
 
@@ -44,4 +44,28 @@ systemctl enable|disable redis-server
 开启/关闭/重启/显示状态
 ```
 systemctl start|stop|restart|status redis-server
+```
+
+## 远程登录
+
+默认Redis客户端只能从`127.0.0.1`登录，但我们线上环境肯定不能把Redis和应用服务器放到同一台机器上，因此需要修改配置文件，启用远程登录。在Ubuntu下，找到`/etc/redis/redis.conf`，学习时出于方便考虑，直接将`bind 127.0.0.1`注释掉即可。`bind`用于实现访问IP的白名单，实际生产环境使用时应该根据需求进行配置，切忌直接把该配置注掉允许任何IP访问。
+
+登录远程redis例子：
+
+```
+redis-cli -h 192.168.43.164 -p 6379
+```
+
+## 设置登录密码
+
+Redis的权限管理功能非常弱（几乎没有），但其实还是可以设置一个密码，起到一定的安全防护（然而这个密码居然还是明文配置的）。在`redis.conf`中，找到`requirepass`设置，将其取消注释并设置我们自己的密码即可。
+
+设置密码后重启`redis-server`，我们通过`redis-cli`依然可以连接，但是如果不使用密码就不能进行任何操作了。
+
+![](res/2.png)
+
+我们需要在登录时指定密码，例如：
+
+```
+redis-cli -h 192.168.43.164 -p 6379 -a abc123
 ```
