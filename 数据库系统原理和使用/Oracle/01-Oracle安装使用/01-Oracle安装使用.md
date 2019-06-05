@@ -106,7 +106,7 @@ sqlplus / as sysdba
 
 ```sql
 alter user scott account unlock;
-alter user scott identified by user;
+alter user scott identified by tiger;
 alter user hr account unlock;
 alter user hr identified by hr;
 ```
@@ -126,7 +126,9 @@ grant create session to <你的用户名>;
 grant create table to <你的用户名>;
 ```
 
-这样配置后，我们就可以使用新用户登入了。该用户具有自己的表和表内数据的增删改查权限。
+这样配置后，我们就可以使用新用户登入了。该用户具有登录和创建表的权限。有关权限的说明可以查阅官方文档：
+
+[https://docs.oracle.com/cd/E11882_01/timesten.112/e21642/privileges.htm](https://docs.oracle.com/cd/E11882_01/timesten.112/e21642/privileges.htm)
 
 ## 使用导航猫连接Oracle
 
@@ -172,4 +174,4 @@ ORCL =
 
 ![](res/9.png)
 
-注：由于好多人都是使用的这个软件操作Oracle，我开始还以为PL/SQL Developer是Oracle官方的工具，后来发现不是，它是第三方开发的，而且是收费软件。
+注：由于好多人都是使用的这个软件操作Oracle，我开始还以为PL/SQL Developer是Oracle官方的工具，后来发现不是，它是第三方开发的，而且是收费软件，用起来也非常麻烦，这可能是历史原因造成的。
