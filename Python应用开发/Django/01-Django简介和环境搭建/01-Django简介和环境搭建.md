@@ -90,6 +90,15 @@ python3 manage.py runserver 8080
 python3 manage.py startapp app1
 ```
 
+新创建的app必须在`settings.py`里配置到`INSTALLED_APPS`中，否则是不会生效的。
+
+```python
+INSTALLED_APPS = [
+    ...
+    'app1'
+]
+```
+
 app1目录结构
 ```
 app1

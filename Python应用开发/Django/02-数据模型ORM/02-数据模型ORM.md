@@ -42,7 +42,7 @@ DATABASES = {
 }
 ```
 
-注意：Django的ORM自动建表后，默认的编码就是MySQL数据库的默认编码，为了方便，我们可以把数据库的编码统一修改成UTF8，否则默认为latin1，插入中文字段会报错。
+注意：Django的ORM自动建表后，默认的编码就是MySQL数据库的默认编码，为了方便，创建新数据库后我们可以把数据库的编码统一修改成UTF8，否则默认为latin1，插入中文字段会报错。
 
 ## 编写持久化类
 
@@ -71,21 +71,6 @@ class Choice(models.Model):
 注意外键的定义方式，第一个参数是关联的类名，第二个关键字参数指定了删除级联，即Question删除时级联删除所有Choice。
 
 ## 将持久化类映射到数据库
-
-首先我们不要忘了在settings.py中注册app1这个模块。
-
-settings.py
-```python
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'app1.apps.App1Config'
-]
-```
 
 执行下面的命令
 ```
