@@ -21,7 +21,13 @@ DATABASES = {
 
 ## MySQL数据库配置
 
-Django如果使用MySQL，需要额外安装`PyMySQL`这个库作为其后端（backend）。注意，这里Python连接MySQL数据库的接口有好几种，Django支持作为后端的也不止一种，但是最新的Python3只支持PyMySQL这一种。
+Django如果使用MySQL，需要额外安装`mysqlclient`这个库作为其后端（backend）。
+
+```
+pip3 install mysqlclient
+```
+
+注意，这里Python连接MySQL数据库的接口有好几种，Django支持作为后端的也不止一种，但是最新的Python3只支持`mysqlclient`这一种。
 
 配置文件如下，注意这里我们要预先手动创建好数据库：
 
