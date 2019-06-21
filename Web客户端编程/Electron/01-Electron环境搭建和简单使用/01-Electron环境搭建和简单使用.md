@@ -64,7 +64,7 @@ function createMainWindow () {
     Menu.setApplicationMenu(null);
 
     // 启动后打开chrome调试工具（也可在菜单中打开）
-    // window.webContents.openDevTools();
+    // electronWindow.webContents.openDevTools();
 
     // 关闭窗口时将electronWindow对象置为null
     electronWindow.on('closed', () => {
