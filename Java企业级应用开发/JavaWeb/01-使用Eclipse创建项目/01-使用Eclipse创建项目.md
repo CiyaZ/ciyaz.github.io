@@ -86,7 +86,7 @@ pom.xml
 
 ## 配置JRE
 
-由于我们使用Maven管理项目，因此编译等级是`pom.xml`指定的，但Tomcat的运行时JRE还是要我们手动指定。在设置对话中中，找到`Java -> Installed JREs`，我们这里加入JDK8的运行时。
+由于我们使用Maven管理项目，因此编译等级是`pom.xml`指定的，但Tomcat的运行时JRE还是要我们手动指定。在设置对话框中，找到`Java -> Installed JREs`，我们这里加入JDK8的运行时。
 
 ![](res/5.png)
 
