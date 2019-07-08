@@ -2,13 +2,26 @@
 
 传统的HTTP协议只能以请求、响应的方式进行浏览器和服务器的通信。WebSocket是html5规范定义的新功能，它能实现浏览器和服务器之间的TCP全双工通信。这种通信方式非常适合聊天室，游戏等即时应用。
 
-JavaEE7规范提供了WebSocketAPI，使用十分简单，这组API在`javax.websocket.*`下。
+JavaEE7规范提供了WebSocketAPI，在Tomcat下使用十分简单，这组API在`javax.websocket.*`下。
 
-# 使用WebSocket
+## 使用WebSocket
+
+### Maven依赖
+
+首先要添加`websocket`的Maven依赖：
+
+```xml
+<dependency>
+  <groupId>javax.websocket</groupId>
+  <artifactId>javax.websocket-api</artifactId>
+  <version>1.0</version>
+  <scope>provided</scope>
+</dependency>
+```
+
+### WebSocket服务端
 
 使用WebSocket，我们的程序必须运行在应用服务器中，使用`@ServerEndpoint(value = path)`注解标注的Java类，提供WebSocket服务。下面是一个聊天室例子：
-
-该例子使用Tomcat7.0.70
 
 ```java
 package com.ciyaz.controller;
@@ -105,6 +118,8 @@ public class ChatAnnotation
 
 其中用注解标注了四个方法，分别在用户连接WebSocket，关闭WebSocket，发消息，出错时回调。这里要注意的是，该类是多例的，也就是一个请求会创建一个实例，在新的线程中运行，所以用`static`修饰的`connections`来记录所有的连接。
 
+### WebSocket客户端
+
 客户端代码：
 
 页面
@@ -176,18 +191,3 @@ window.onload = function()
 运行结果
 
 ![](res/1.png)
-
-# 关于pom.xml注意
-
-上面例子中，我使用Maven创建工程，加入了ApplicationServerLibrary，但是还是提示找不到`javax.websocket`，于是我在Maven中加入了如下依赖：
-
-```xml
-<dependency>
-  <groupId>javax.websocket</groupId>
-  <artifactId>javax.websocket-api</artifactId>
-  <version>1.0</version>
-  <scope>provided</scope>
-</dependency>
-```
-
-注意`<scope>`，由于Tomcat中已经存在这个jar包了，位于'lib/websocket-api.jar'，如果不加`<scope>provided</scope>`，默认将依赖包编译到webapp中，会引起运行时的冲突，定义的ServerEndpoint类根本不会加载，但如果不加这个依赖又无法编译。

@@ -1,8 +1,8 @@
 # Filter
 
-filter可以对用户的请求进行预处理和后处理，也就是说，filter可以拦截发给servlet的request，可以拦截发给客户端的response，多个filter可以形成处理链。filter主要用于用户权限认证，生成访问日志，编解码等。
+Filter可以对用户的请求进行预处理和后处理，也就是说，Filter可以拦截发给Servlet的request，可以拦截发给客户端的response，多个Filter可以形成处理链。Filter主要用于用户权限认证，生成访问日志，编解码等。
 
-## filter例子
+## Filter例子
 
 下面例子中，在请求传递给`TestServlet`之前和之后，会分别打印两条信息。从Filter和Servlet的设计上看，`FilterChain`体现的是责任链设计模式。
 
@@ -27,7 +27,7 @@ public class TestFilter implements Filter
 }
 ```
 
-Filter实际上在功能上完全可以替代Servlet（struts2控制器实际上就是基于Filter的），在MVC中也可以作为控制器。
+Filter实际上在功能上完全可以替代Servlet（Struts2控制器实际上就是基于Filter的），在MVC中也可以作为控制器。
 
 ## Filter的生命周期
 

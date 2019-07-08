@@ -2,7 +2,7 @@
 
 JSTL（JavaServer Pages Standard Tag Library），是JSP的标准标签库。上一篇笔记介绍了JSP+Servlet+JavaBean实现MVC模式的表现层架构，JSP作为模板，需要实现判断、循环等功能，用于HTML输出。JSTL标签就能够实现。当然，JSP最初的目的不仅仅是作为表现层MVC的模板，而是还能够实现Model1模式（JSP+JavaBean）的开发，因此JSTL里也有一些额外的标签，这里不做介绍。
 
-除了JSP之外，实际上还有其他的表现层模板引擎，如`Velocity`等，Velocity使用了自己的VTL语法，而不是类似JSP标签的东西，因此Velocity更像是纯粹的模板引擎，JSP倒像是一个更复杂的技术被用户当成模板引擎使用。Velocity可以在其他章节中找到相关介绍。
+除了JSP之外，实际上还有其他的表现层模板引擎可以使用，如`Velocity`、`Thymeleaf`等，Velocity使用了自己的VTL语法，而不是类似JSP标签的东西，因此Velocity更像是纯粹的模板引擎，JSP倒像是一个更复杂的技术被用户当成模板引擎使用。而比较新的`Thymeleaf`则是一种转为Web开发设计的模板，目前应用非常广泛。
 
 ## 引入JSTL依赖
 

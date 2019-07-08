@@ -1,6 +1,6 @@
 # Listener
 
-Listener组件可以监听web容器内的各种事件。定义Listener和servlet、filter相同，定义实现类并使用注解配置一下即可。我们编写的Listener主要用于应用启动时的一些初始化工作。
+Listener组件可以监听web容器内的各种事件。定义Listener和Servlet、Filter相同，定义实现类并使用注解配置一下即可。我们编写的Listener主要用于应用启动时的一些初始化工作。
 
 ## 可以实现的接口
 
