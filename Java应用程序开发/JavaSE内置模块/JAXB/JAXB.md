@@ -4,6 +4,30 @@ JAXB（Java Architecture for XML Binding），是通过注解实现Java实体类
 
 后期补充：由于JAXB属于JavaEE体系，在JDK11中已经移除了JAXB，但你仍可以通过Maven引入该依赖。
 
+```xml
+<!-- JAXB -->
+<dependency>
+	<groupId>javax.xml.bind</groupId>
+	<artifactId>jaxb-api</artifactId>
+	<version>2.3.0</version>
+</dependency>
+<dependency>
+	<groupId>com.sun.xml.bind</groupId>
+	<artifactId>jaxb-core</artifactId>
+	<version>2.3.0</version>
+</dependency>
+<dependency>
+	<groupId>com.sun.xml.bind</groupId>
+	<artifactId>jaxb-impl</artifactId>
+	<version>2.3.0</version>
+</dependency>
+<dependency>
+	<groupId>javax.activation</groupId>
+	<artifactId>activation</artifactId>
+	<version>1.1.1</version>
+</dependency>
+```
+
 ## XML类型和Java类型的映射关系
 
 ![](res/1.png)
