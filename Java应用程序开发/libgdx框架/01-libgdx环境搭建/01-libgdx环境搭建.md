@@ -1,10 +1,10 @@
 # LibGDX简介
 
-本系列笔记参考《Learning LibGDX Game Development second edition》。
+本系列笔记参考官方文档和《Learning LibGDX Game Development second edition》。
 
 LibGDX是一个跨平台2D/3D游戏开发框架。由Java和C/C++编写而成，使用LibGDX需要熟悉Java语言，使用JVM的高级特性能够使编码更加方便。LibGDX支持桌面平台（Windows，Linux，Mac），移动平台（Android2.2+，IOS），Web平台（HTML5，使用JavaScript和WebGL）。
 
-值得注意的是，LibGDX是一个框架而不是一个游戏引擎。游戏引擎通常包含完整的场景、代码编辑器和一组API，需要使用引擎定义的工作流进行开发。而框架则是更底层的一种开发方式，我们可以使用自己的编辑器按照自己的想法开发，有必要时还可以调用底层OpenGL函数，也就是说，开发者的自由度更高。
+值得注意的是，LibGDX更像是一个框架而不是一个游戏引擎。游戏引擎通常包含完整的场景、代码编辑器和一组API，需要使用引擎定义的工作流进行开发。而框架则是更底层的一种开发方式，我们可以集成自己的编辑器按照自己的想法开发，有必要时还可以调用底层OpenGL函数，也就是说，开发者的自由度更高，但是需要做的也更多。
 
 ## LibGDX特性介绍
 
@@ -12,17 +12,17 @@ LibGDX是一个跨平台2D/3D游戏开发框架。由Java和C/C++编写而成，
 
 ## LibGDX环境搭建
 
-LibGDX提供了创建工程目录的工具，我们直接使用这个工具创建工程就行了。[下载](http://libgdx.badlogicgames.com/download.html)
+LibGDX提供了创建工程目录的工具，我们直接使用这个工具创建工程就行了。[开发包下载](https://libgdx.badlogicgames.com/old-site/releases/)
 
 下载后得到gdx-setup.jar
 
 ![](res/1.png)
 
-运行这个jar包，得到项目创建界面，我们简单配置一下，如下图所示。
+运行这个jar包，得到项目创建界面，我们简单配置一下，如下图所示。我们在这里配置项目名，部署平台等内容。
 
 ![](res/2.png)
 
-点击Advance，可以配置Maven仓库镜像和生成idea的配置文件，这里我们准备使用Intellij IDEA开发。
+点击Advance，这里可以单独配置Maven仓库镜像和IDE的配置文件，但实际上我们无需在这里做些画蛇添足的配置，一般我们都把Maven镜像配置到`~/.m2/settings.xml`中，Gradle工程也能直接导入这三个主流IDE。
 
 ![](res/3.png)
 
@@ -30,7 +30,7 @@ LibGDX提供了创建工程目录的工具，我们直接使用这个工具创�
 
 ![](res/4.png)
 
-我们按照上图提示在Intllij IDEA中引入该工程即可。
+我们按照上图提示导出集成开发环境即可。
 
 ![](res/5.png)
 
@@ -44,11 +44,6 @@ LibGDX提供了创建工程目录的工具，我们直接使用这个工具创�
 
 或者把资源拷贝到工程默认的working directory也可以。
 
-再次点击Run就可以正常运行了。点击Run后，idea会自动调用gradle编译。结果如图：
+再次点击Run就可以正常运行了。点击Run后，idea会自动调用Gradle构建项目。结果如图：
 
 ![](res/7.png)
-
-注意：
-
-1. LibGDX自动创建的工程使用wrapper指定了一个gradle版本，而且自动生成了gradle配置文件和idea的配置文件，我们直接点运行按钮就好了。
-2. 创建项目和载入idea都可能要等一阵子时间，如果gradle和maven都能正常访问，一般不会出问题。下载的东西都会本地缓存，第二次创建项目非常快。
