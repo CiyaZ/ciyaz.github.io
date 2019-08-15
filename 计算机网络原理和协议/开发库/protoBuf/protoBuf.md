@@ -1,6 +1,6 @@
 # protoBuf
 
-Protocol Buffers（后文简称protoBuf），是Google编写的一个序列化库。我们通过定义一个标准的`.proto`文件，就可以生成常见编程语言中该数据结构的序列化、反序列化的相关代码，用起来非常方便，因此protoBuf在应用程网络协议的制定上应用很广泛。
+Protocol Buffers（后文简称protoBuf），是Google编写的一个序列化库。我们通过定义一个标准的`.proto`文件，就可以生成常见编程语言中该数据结构的序列化、反序列化的相关代码，用起来非常方便，因此protoBuf在应用程序网络协议的制定上应用很广泛。
 
 除此之外，Google推出了基于protoBuf的远程调用解决方案gRPC，在微服务架构中应用很多。
 
