@@ -132,6 +132,13 @@ public class DemoHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, HttpObject httpObject) throws Exception {
         if (httpObject instanceof HttpRequest) {
+            // 输出请求URI
+            HttpRequest request = (HttpRequest) httpObject;
+            System.out.println(request.uri());
+            // 输出请求头信息
+            request.headers().forEach((entry) -> {
+                System.out.println(entry.getKey() + "\t=>\t" + entry.getValue());
+            });
             // 创建一个包含返回数据的ByteBuf缓冲区作为HTTP响应体
             ByteBuf content = Unpooled.copiedBuffer("<p>Hello, world!</p>", CharsetUtil.UTF_8);
             // HTTP响应对象
