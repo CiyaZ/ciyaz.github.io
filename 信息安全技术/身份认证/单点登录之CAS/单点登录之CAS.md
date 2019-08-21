@@ -43,7 +43,7 @@ CAS（Central Authentication Service）是一种实现单点登录的架构，�
 
 如果对SpringCloud熟悉，可以跳过这里。
 
-建SpringBoot项目时，加入Eureka依赖：
+创建SpringBoot项目时，加入Eureka依赖：
 ```xml
 <dependency>
   <groupId>org.springframework.cloud</groupId>
