@@ -2,7 +2,7 @@
 
 ## Cocos2D发展历史
 
-最初，cocos2D是在2008年，由阿根廷程序员Ricardo Quesada使用Python语言编写的一个游戏引擎，后来使用Objective-C重新编写了Cocos2D for iPhone，成为了iOS平台上一款十分成功的2D游戏引擎。后来，cocos2D引擎由许许多多人进行了各个平台的移植，其中在国内比较成功的版本是cocos2d-x，是国人作者王哲的C++移植版本，cocos2d-x最大的优点之一是跨平台支持，不仅支持Android、iOS，还支持桌面操作系统Windows、Linux等，在2014年左右，cocos2d-x制作手机游戏相当火。
+最初，cocos2D是在2008年，由阿根廷程序员Ricardo Quesada使用Python语言编写的一个游戏引擎，后来使用Objective-C重新编写了Cocos2D for iPhone，成为了iOS平台上一款十分成功的2D游戏引擎。再后来，cocos2D引擎由许许多多人进行了各个平台的移植，其中在国内比较成功的版本是cocos2d-x，是国人作者王哲的C++移植版本，cocos2d-x最大的优点之一是跨平台支持，不仅支持Android、iOS，还支持桌面操作系统Windows、Linux等，在2014年左右，cocos2d-x制作手机游戏相当火。
 
 cocos2d-x由北京触控科技支持，这家公司主要靠手机游戏“捕鱼达人”发家，现在（2018年）这种益智类小游戏基本已经凉了，触控科技已经转为做平台而不是做游戏了。cocos2d-x时期出现了cocos studio和cocos builder，但是据说都十分坑，我都没用过，在同时期Unity的对比之下，这俩工具估计也凉了。
 
