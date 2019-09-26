@@ -81,6 +81,25 @@ System.out.println(divResult);
 
 加法、减法、乘法没什么可说的，我们主要看除法。因为除法可能产生一个无限小数（十进制无法精确表示的分数），因此我们一般使用除法时都指定保留位数和保留算法。上面代码中的`a.divide(b, 2, BigDecimal.ROUND_HALF_UP)`，我们保留两位小数，使用最传统的“四舍五入”。
 
+## BigDecimal比较
+
+对于整数或浮点数字面量，比较它们直接使用比较运算符就行了，但BigDecimal比较复杂一点，我们需要调用`compareTo()`方法。
+
+```java
+BigDecimal a = new BigDecimal("0.1");
+BigDecimal b = new BigDecimal("0.3");
+System.out.println(a.compareTo(b));
+```
+
+输出结果：
+```
+-1
+```
+
+对于`a.compareTo(b)`，当`a<b`时，返回`-1`，当`a=b`时，返回`0`，当`a>b`时，返回`1`。
+
+注意：比较两个BigDecimal的值相等，使用`equals()`是错误的，当两个BigDecimal的`scale`不同时（比如`2.0`和`2.00`），它不会认为这两个数是相等的。
+
 ## 数据库类型
 
 这里额外说一下，Java中BigDecimal类型对应的MySQL数据库类型是`Decimal`，它能表述一个定点小数，当然，也有一些奇葩的用`varchar`等。
