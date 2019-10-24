@@ -1,6 +1,6 @@
 # Symbol类型
 
-在ES6中引入了一个新的基本数据类型`Symbol`，本片笔记记录Symbol的用法。
+在ES6中引入了一个新的基本数据类型`Symbol`，本篇笔记记录Symbol的用法。
 
 ## Symbol的意义
 
