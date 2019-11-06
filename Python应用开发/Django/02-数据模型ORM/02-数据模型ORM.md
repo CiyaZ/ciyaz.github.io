@@ -48,7 +48,7 @@ DATABASES = {
 }
 ```
 
-注意：Django的ORM自动建表后，默认的编码就是MySQL数据库的默认编码，为了方便，创建新数据库后我们可以把数据库的编码统一修改成UTF8，否则默认为latin1，插入中文字段会报错。
+注意：Django的ORM自动建表后，默认的编码就是MySQL数据库的默认编码，为了方便，创建新数据库时我们可以统一将数据库的字符编码设定为`utf8mb4`，否则默认为`latin1`，插入中文字段会报错。
 
 ## 编写持久化类
 
@@ -83,14 +83,16 @@ class Choice(models.Model):
 python3 manage.py makemigrations app1
 ```
 
-由于我们在`INSTALLED_APPS`里配置了很多模块，包括内置模块和我们自己编写的模块，这些模块需要很多数据库表的支持，这条指令会创建所有模块需要的数据库操作语句（注意：此时还没写入数据库，`migrations`文件夹下会出现一个名为`0001_initial`的python文件，创建的执行操作缓存在这里尚未执行，`migrations`可以提供类似版本控制的功能）。`migration`在Django中的概念可以理解为数据迁移。
+由于我们在`INSTALLED_APPS`里配置了很多模块，包括内置模块和我们自己编写的模块，这些模块需要很多数据库表的支持，这条指令会创建所有模块需要的数据库操作语句（注意：此时还没写入数据库，`migrations`文件夹下会出现一个名为`0001_initial`的python文件，创建的执行操作缓存在这里尚未执行，`migrations`可以提供类似版本控制的功能）。`migrations`在Django中的概念可以理解为数据迁移。
 
-下面的命令可以查看app1模块中，0001次数据迁移的SQL操作
+下面的命令可以查看app1模块中，0001次数据迁移的SQL操作：
+
 ```
 python3 manage.py sqlmigrate app1 0001
 ```
 
-下面命令真正的将所有操作写入数据库
+下面命令真正的将所有操作写入数据库：
+
 ```
 python3 manage.py migrate
 ```

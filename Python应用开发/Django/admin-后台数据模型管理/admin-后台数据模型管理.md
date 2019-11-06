@@ -28,6 +28,8 @@ python manage.py createsuperuser
 
 ![](res/1.png)
 
+注：admin的登录功能默认是需要集成auth模块的，当然，这两个模块一般新创建项目时都是自带的。
+
 ## 展示模型的字段
 
 假设我们有这样一个定义好的数据模型：
