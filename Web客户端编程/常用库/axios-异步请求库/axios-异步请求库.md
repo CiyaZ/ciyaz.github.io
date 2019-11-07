@@ -2,6 +2,8 @@
 
 axios是一个基于Promise异步模型的用于浏览器和Node的HTTP客户端。
 
+## axios和JQuery对比
+
 JQuery的`$.ajax()`也能实现同样的功能，但是使用JQuery有以下几个缺点：
 
 1. 如果项目不依赖JQuery，引入JQuery比引入axios开销更大（JQuery有很多其他功能，库比较大）
@@ -190,6 +192,10 @@ axios({
       console.log(JSON.stringify(resp));
 });
 ```
+
+## 使用await
+
+`axios()`返回的是一个Promise对象，其实它可以作为一个`async`函数，如果你对此比较熟悉，完全可以用`await`写法取代Promise的`then()`等函数，让代码看上去更加直观（见`Web客户端编程/EcmaScript6/异步编程之async函数`），这里就不多介绍了。
 
 ## 文档
 
