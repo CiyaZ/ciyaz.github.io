@@ -1,6 +1,39 @@
 # 处理HTTP请求和响应
 
-这篇笔记介绍Django中，如果获取请求参数、请求内容，以及如何生成HTTP响应。
+这篇笔记介绍Django中，如何获取请求参数、请求内容，以及如何生成HTTP响应。
+
+## 路由配置
+
+Django和Flask、SpringMVC等框架不同，路由需要集中在几个配置文件中。
+
+首先我们需要在`settings.py`中配置一个`ROOT_URLCONF`，这个属性指定根路由配置。下面代码指定根路由配置文件是`blog`模块的`urls.py`。
+
+settings.py
+```python
+ROOT_URLCONF = 'blog.urls'
+```
+
+下面例子代码中，我们配置了几个路由作为例子，实际上，Django读取的路由配置就是一个叫做`urlpatterns`的列表。
+
+blog/urls.py
+```
+from django.urls import path, re_path
+from django.urls.conf import include
+from blog.views.index_view import index
+from blog.views.blog_view import blog
+
+
+urlpatterns = [
+    path('', index),
+    path('index', index),
+    re_path(r'^blogs/(?P<id>[0-9]+)$', blog),
+    path('backend/', include('backend.urls'))
+]
+```
+
+浏览器访问`/`或`/index`会由`index_view.index()`进行处理，访问`/blogs/<blogId>`会由`blog_view.blog()`响应对应的文章，而以`/backend/`为前缀的会跳转到`backend`模块的子路由配置文件。
+
+在`backend`模块下，我们也同样创建了一个`urls.py`，其中的`urlpatterns`列表，作为该子模块的路由定义。
 
 ## 处理请求
 
@@ -12,17 +45,6 @@ django中，解析HTTP请求主要是由框架自动完成的，我们只需要�
 
 ```
 http://localhost:8080/app1?id=1
-```
-
-`urls.py`路由配置：
-
-```python
-from django.conf.urls import url
-from . import views
-
-urlpatterns = [
-    url(r'^$', views.index),
-]
 ```
 
 `views.py`获取请求参数：
