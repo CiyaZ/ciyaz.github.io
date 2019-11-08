@@ -69,6 +69,22 @@ class ArticleAdmin(admin.ModelAdmin):
 
 注意：图中表格字段表头为中文名，而不是字段英文名，这是因为我们在数据模型字段上定义了`verbose_name`属性。
 
+### 展示自定义字段
+
+上面代码中介绍了使用`list_display`能够展示模型的字段，但如果要展示的内容在关联模型中，或者完全是通过计算得出的自定义字段，我们必须手动编写获取该字段的方法。
+
+```python
+@admin.register(Book)
+class BookAdmin(admin.ModelAdmin):
+    list_display = ['title', 'price', 'get_category']
+    search_fields = ['title']
+
+    def get_category(self, obj):
+        return obj.category.name
+```
+
+上面代码中，在`Book`模型中展示其关联模型`Category`的名字。
+
 ## 集成ckeditor
 
 Admin后台中，默认`TextField`使用原始的`<textarea>`组件进行输入处理，对于CMS系统等使用场景，我们显然需要一个富文本编辑器，`django-admin`可以很容易和`ckeditor`集成。
