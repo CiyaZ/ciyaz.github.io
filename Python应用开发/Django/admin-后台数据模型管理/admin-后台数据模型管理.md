@@ -49,6 +49,8 @@ class Article(models.Model):
         return '[' + str(self.pk) + '] ' + self.title
 ```
 
+注意模型定义中的`verbose_name`这个关键字参数，`admin`组件会读取该参数作为查询时表格字段的表头。
+
 默认情况下，Admin后台除了用户管理，没有模型数据的管理，我们需要将模型数据注册到Admin组件。
 
 admin.py
