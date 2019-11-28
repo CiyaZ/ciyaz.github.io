@@ -2,7 +2,9 @@
 
 前一节我们了解到，Django是一个MTV框架，这篇笔记记录，如何将数据模型（Model）持久化到数据库中。
 
-## SQLite3数据库配置
+## 数据库配置
+
+### SQLite3数据库配置
 
 Django默认支持SQLite3，MySQL，PostgreSQL，Oracle等常见数据库。默认创建的工程已经针对SQLite3做出了配置，在没有性能要求的小型应用中，SQLite3是很好的选择。
 
@@ -19,7 +21,7 @@ DATABASES = {
 * ENGINE：选择要使用的持久层后端，这里使用SQLite3
 * NAME：持久化到哪个数据库，SQLite3对应的就是一个文件，MySQL等就是对应一个数据库（由CREATE DATABASE语句创建）
 
-## MySQL数据库配置
+### MySQL数据库配置
 
 Django如果使用MySQL，需要额外安装`mysqlclient`这个库作为其后端（backend）。
 

@@ -93,9 +93,9 @@ urlpatterns = [
 
 ### 解析请求Json
 
-获取请求Json这里就比较坑了，Django的不灵活性在这里体现了出来。我们前面了解到，Django要求POST必须带一个CSRF参数，这个参数是通过POST表单键值对的形式，提交给Django框架的，但我们一般向服务器传Json都是直接POST一个Json字符串，Django对于这种情况只会报`403`错误。
+我们前面了解到，Django要求POST必须带一个CSRF参数，这个参数是通过POST表单键值对的形式，提交给Django框架的，但我们一般向服务器传Json都是直接POST一个Json字符串，Django对于这种情况只会报`403`错误。要想解决这个问题，有两种方式：
 
-要想让Django接收到POST发送到服务器的Json，我们提交的内容必须还是表单的形式。
+方式1：以表单的形式提交CSRF_TOKEN和亲求Json字符串。
 
 ```javascript
 $(function () {
@@ -128,7 +128,69 @@ request.POST.get('msg')
 
 后台直接通过POST请求的`msg`参数，就能获取到JSON字符串了。
 
-这确实很别扭，但比起关闭防CSRF的安全功能，还是这样做比较靠谱。
+实际上，这种方式比较别扭，而且如果是前后端分离的开发模式，前端页面是完全不使用模板引擎解析的（通常是使用Nginx直接提供静态文件，仅对API请求进行反向代理），这样就没法从页面上获取CSRF参数了。
+
+方式2：使用Ajax获取CSRF_TOKEN，将其加入请求header中。
+
+Django除了支持将CSRF_TOKEN作为请求字段，还支持将其作为请求header传递给服务器，此外，我们也可以用View组件中Python代码的形式获取CSRF_TOKEN，然后通过Ajax的方式将其传给前端。
+
+前端请求CSRF_TOKEN：
+
+```javascript
+window.onload = function () {
+    $.ajax({
+        type: "GET",
+        async: true,
+        url: '/csrftest/token',
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (msg) {
+            app.csrf_token = msg.csrf_token;
+        },
+        error: function (err) {
+            alert('获取token请求失败!');
+        }
+    });
+};
+```
+
+后端获取CSRF_TOKEN并返回：
+
+```python
+def get_token(request):
+    csrf_token = csrf.get_token(request)
+    return JsonResponse({
+        'csrf_token': csrf_token
+    })
+```
+
+前端发送POST请求传递Json数据：
+
+```javascript
+function postJson() {
+    $.ajax({
+        type: "POST",
+        async: true,
+        url: '/csrftest/post',
+        headers: {
+            'X-CSRFToken': app.csrf_token
+        },
+        data: JSON.stringify({
+        'username': 'Tom',
+        'password': 'abc123'
+    }),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (msg) {
+        },
+        error: function (err) {
+            alert('POST请求失败!');
+        }
+    });
+}
+```
+
+如果是不使用模板引擎前后端完全分离开发的情况，实际上有一个CSRF_TOKEN获取时机的问题，上面代码中，我们在`window.onload()`时就获取了这个参数，除此之外，也可能存在发起POST请求前，现获取CSRF_TOKEN的情况，这时就需要注意异步顺序了。
 
 ### 处理文件上传
 
