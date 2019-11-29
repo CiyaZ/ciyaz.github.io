@@ -45,3 +45,7 @@ PHPIniDir "c:/php-ts"
 和上一篇基本相同，这里就不多做叙述了。
 
 注意：XDebug的默认（也不算默认，就是大家都这么配）9000端口可能和惠普电脑的一大堆服务冲突，换一个就好了。
+
+## 使用Nginx
+
+Nginx的使用在Windows下和Linux基本相同，稍微不同的一个是Windows下Nginx配置文件、可执行文件都放在一起，另外Windows下也没有unix domain socket，因此需要配置到php-fpm的IP和端口，Nginx默认带有PHP的配置，只要取消注释就行了，这里就不多介绍了。
