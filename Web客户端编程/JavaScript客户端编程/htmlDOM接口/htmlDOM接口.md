@@ -124,7 +124,7 @@ div.style.color = "red";
 
 ### 访问方法级联操作
 
-document可以看成文档根节点，因此如果想访问整个文档的所有<p>元素，使用document.getElementsByTagName("p")即可，如果像选出id="id"节点的子<p>元素，那么使用document.getElementById("id").getElementsByTagName("p")即可。﻿﻿
+document可以看成文档根节点，因此如果想访问整个文档的所有<p>元素，使用document.getElementsByTagName("p")即可，如果像选出id="id"节点的子<p>元素，那么使用document.getElementById("id").getElementsByTagName("p")即可。
 
 ### 父、子、同胞导航属性
 
