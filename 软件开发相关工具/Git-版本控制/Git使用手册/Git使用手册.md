@@ -16,7 +16,7 @@ sudo apt-get install git
 ```shell
 sudo apt-add-repository ppa:git-core/ppa
 sudo apt-get update
-sudo apt-get install git﻿
+sudo apt-get install git
 ```
 
 # 本地仓库操作
@@ -197,7 +197,7 @@ git branch
 
 ![](res/19.png)
 
-当前所在的分支会标出*。
+当前所在的分支会标出`*`。
 
 ## 合并分支
 
