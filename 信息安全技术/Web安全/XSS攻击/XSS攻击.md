@@ -74,3 +74,37 @@ document.appendChild(img);
 HTTP协议支持`HttpOnly`标记，假如浏览器实现上没有任何bug，它能保证JavaScript无法以任何方式读取`HttpOnly`的Cookie，只有HTTP请求才能带上Cookie，这个基本杜绝了窃取`sessionId`形式的XSS，默认PHP的`PHPSESSID`就是`HttpOnly`的，之前我们演示的程序如果不手动把`HttpOnly`去掉是根本不可能被攻击成功的。
 
 尽管如此，我们仍不排除有些网站会用非`HttpOnly`记录一些其它有价值的数据，除此之外，前后端分离开发时（Vue/React/Angular）一定要留心，很多新手开发者为了和移动客户端的登录机制兼容，需要手动设置一个`Cookie`存储登录凭证而忘记了`HttpOnly`，此外存储在`Local Storage`、`Session Storage`、`IndexedDB`、`WebSQL`中也没有任何XSS保护，在HTML标准于安全方面变的更加完善之前，像登录凭证这种数据不应出现在这些地方。
+
+## 常见问题
+
+有关XSS的常见漏洞，一般体现在两个方面：
+
+1. 关键cookie没有使用`HttpOnly`机制
+2. 数据提交和展示逻辑存在漏洞
+
+其中第一项没什么可说的，修改也不难，很多中小型团队随着业务变得复杂，经常会修改框架，或者自己封装一些库以供复用，如果开发者缺乏相关安全意识，很可能某个`xxsessionid`或`xxtoken`就轻易的泄露了，这方面就需要加强开发人员的安全意识了。
+
+关于第二项，现在大多数MVC框架如：ThinkPHP、Laravel等在模板（后端渲染）都有足够的安全机制，我们想写漏洞都难，问题倒是容易出在一些JavaScript实现的DOM操作上。
+
+### innerText和innerHTML
+
+使用`innerText`操作写入内容，HTML标签会被自动转义。
+
+使用`innerHTML`写入的内容不会自动转义，如果写入的内容包含HTML标签，其会被浏览器解析。但是，`innerHTML`写入的`<script></script>`脚本其实不会生效，这和JavaScript脚本的加载顺序有关，然而非法的HTML标签也会造成很大危害了。
+
+### JQuery的不安全操作
+
+JQuery支持类似`$('<div></div>')`这种创建DOM节点的方法，我见过很多人（尤其是使用JQuery的一些老旧系统上），需要异步渲染一个表格，直接用类似下面的代码：
+
+```javascript
+$(function () {
+    var root = $('#txt');
+    var str = '<script>alert(\'fuck u!\')</script>';
+    var child = $(str);
+    root.append(child);
+});
+```
+
+假定上面的`str`变量是从数据库中取出来的数据，其中可能包含非法的XSS脚本，那么很遗憾，上面这种写法注入的脚本是能够运行的，而且危害很大。
+
+实际上，JQuery提供了`text()`、`html()`这类方法，对原生DOM操作的`innerText`和`innerHTML`进行封装，我们千万不要图省事造成安全隐患。
