@@ -74,7 +74,7 @@ Thread t2 = new Thread(new MyThread1());
 
 答案是可以的，但是这样写不好，这不符合软件工程。Runnable是接口，接口描述一组行为，这样写传入的是一个具有该行为的对象实例，而这个实例除了表示Runnable的行为以外，毫无意义。
 
-最佳实践：通常情况下，建议使用实现Runnable接口的方式。如果仅仅想创建一个在新线程中执行的函数，可以在`new Thread`时传入匿名类（甚至lambada）实现Runnable。
+最佳实践：通常情况下，建议使用实现Runnable接口的方式。如果仅仅想创建一个在新线程中执行的函数，可以在`new Thread`时传入匿名类（甚至lambda）实现Runnable。
 
 例子：
 ```java
