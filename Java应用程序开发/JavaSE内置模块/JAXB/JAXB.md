@@ -60,7 +60,7 @@ public class User
 
 ```
 
-* `@XmlAccessType`：class级别注解，`XmlAccessType.FIELD`表示映射所有非静态属性
+* `@XmlAccessorType`：class级别注解，`XmlAccessorType.FIELD`表示映射所有非静态属性
 * `@XmlRootElement`：class级别注解，用于指定XML根节点的名字
 * `@XmlType`：class级别注解，name是这个约束的名字，没什么实际意义，propOrder是XML中，所有子节点的顺序
 * `@XmlAttribute`：属性级别注解，用于指定该属性为根节点的XML属性
