@@ -26,16 +26,15 @@ Tiled对象层上，我们再为`player`加一个自定义属性`player_name`作
 
 ## 加载TMX地图
 
-LibGDX中加载使用地图非常简单，下面例子由之前`Java应用程序开发/libgdx框架/框架核心类`章节例子修改而来，将其中的固定背景换成了TileMap。此外还修改了`PlayerActor`，之前例子没有实现摄像机位置的地图区域限制，这个实现起来非常简单，就不贴代码了。
+LibGDX中加载使用地图非常简单，下面例子由之前`Java应用程序开发/libgdx框架/框架核心类`章节例子修改而来，将其中的固定背景换成了TileMap。
+
+注：此外还修改了`PlayerActor`，之前例子没有实现摄像机位置的地图区域限制，这个实现起来非常简单，就不贴代码了。另外拆分了Screen和Stage，之前是写在一起的，这里给出Stage的代码。
 
 ![](res/4.gif)
 
 ```java
 package com.ciyaz.gdxdemo;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
@@ -46,31 +45,27 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class GameScreen extends ScreenAdapter {
-	// 舞台
-	private Stage stage;
+public class GameStage extends Stage {
 
+	// TileMap渲染器
 	private OrthogonalTiledMapRenderer renderer;
 
 	// TileMap地图长宽，存在这里供其它地方调用
-	public static int mapPixelWidth;
-	public static int mapPixelHeight;
+	public int mapPixelWidth;
+	public int mapPixelHeight;
 
-	@Override
-	public void show() {
-		// 初始化舞台
-		Viewport viewport = new FitViewport(MyGdxGame.GAME_WIDTH, MyGdxGame.GAME_HEIGHT, new OrthographicCamera());
-		stage = new Stage(viewport);
-		Gdx.input.setInputProcessor(stage);
+	public GameStage(Viewport viewport) {
+		super(viewport);
+	}
 
+	public void init() {
 		// TileMap地图
 		TiledMap map = new TmxMapLoader().load("map2/map.tmx");
 		// TileMap地图渲染器
 		renderer = new OrthogonalTiledMapRenderer(map);
-		
+
 		// 获取TileMap宽高等属性
 		MapProperties prop = map.getProperties();
 		int mapWidth = prop.get("width", Integer.class);
@@ -81,7 +76,8 @@ public class GameScreen extends ScreenAdapter {
 		mapPixelHeight = mapHeight * tilePixelHeight;
 
 		// 玩家小人初始化
-		PlayerActor playerActor = new PlayerActor(stage.getCamera());
+		PlayerActor playerActor = new PlayerActor();
+		addActor(playerActor);
 		playerActor.init();
 		// 读取TileMap对象层属性数据 设置小人出生点
 		MapLayers layers = map.getLayers();
@@ -105,22 +101,24 @@ public class GameScreen extends ScreenAdapter {
 				}
 			}
 		}
+	}
+	
+	public int getMapPixelWidth() {
+		return mapPixelWidth;
+	}
 
-		stage.addActor(playerActor);
+	public int getMapPixelHeight() {
+		return mapPixelHeight;
 	}
 
 	@Override
-	public void render(float delta) {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		// 通过摄像机设置地图渲染器的显示正交投影矩阵，该步骤需要放在render()中循环调用
-		renderer.setView((OrthographicCamera) stage.getCamera());
+	public void draw() {
+		// 通过摄像机设置地图渲染器的正交投影矩阵，该步骤需要放在render()中循环调用
+		renderer.setView((OrthographicCamera) getCamera());
 		// 渲染地图全部图层
 		renderer.render();
 
-		stage.act();
-		stage.draw();
+		super.draw();
 	}
 }
 ```
