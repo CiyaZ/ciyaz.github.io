@@ -95,7 +95,7 @@ urlpatterns = [
 
 我们前面了解到，Django要求POST必须带一个CSRF参数，这个参数是通过POST表单键值对的形式，提交给Django框架的，但我们一般向服务器传Json都是直接POST一个Json字符串，Django对于这种情况只会报`403`错误。要想解决这个问题，有两种方式：
 
-方式1：以表单的形式提交CSRF_TOKEN和亲求Json字符串。
+方式1：以表单的形式提交CSRF_TOKEN和请求Json字符串。
 
 ```javascript
 $(function () {
