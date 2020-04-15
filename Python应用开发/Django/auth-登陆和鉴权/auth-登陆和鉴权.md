@@ -140,3 +140,7 @@ current_user.user_permissions.add(permission)
 ```
 
 添加权限这里先手动操作用`ContentType`和`Permission`的ORM操作把一个权限对象给查出来，然后调用`user.user_permissions.add()`添加权限。删除等操作也是类似写法，这里就不多介绍了。
+
+## AnonymousUser问题
+
+这里要注意一个问题：如果访问一个非必须登录的页面，当未登录时，`request.user`返回的是一个`AnonymousUser`，而非`None`。它的主键（pk）为`None`，用户名（username）为空字符串。在模板中，我们可以通过`user.pk is None`来判断其是否登录。
