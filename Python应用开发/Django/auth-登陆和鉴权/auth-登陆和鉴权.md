@@ -90,6 +90,13 @@ def do_logout(request):
 
 我们可以用`request.user`获取当前的用户，如果已经登陆，返回登录用户。如果你的请求没有登录拦截，并且访问的客户端未登录，将返回`AnonymousUser`对象，这可以通过用户的`is_authenticated`进行判断。
 
+```python
+if request.user.is_authenticated:
+    # 已登陆
+else:
+    # 未登录
+```
+
 在模板中，也是同样使用`request.user`即可拿到用户对象，我们不需要再重复将用户对象传入模板上下文。
 
 ## 用户组 Group
@@ -145,4 +152,4 @@ current_user.user_permissions.add(permission)
 
 ## AnonymousUser问题
 
-这里要注意一个问题：如果访问一个非必须登录的页面，当未登录时，`request.user`返回的是一个`AnonymousUser`，而非`None`。它的主键（pk）为`None`，用户名（username）为空字符串。在模板中，我们可以通过`user.pk is None`来判断其是否登录。
+这里要注意一个问题：如果访问一个非必须登录的页面，当未登录时，`request.user`返回的是一个`AnonymousUser`，而非`None`。它的主键（pk）为`None`，用户名（username）为空字符串。在模板中，我们可以通过`user.is_authenticated`属性来判断其是否登录。
