@@ -1,6 +1,6 @@
 # 使用Thymeleaf模板
 
-SpringBoot2中，后端模板引擎仅支持Thymeleaf和Freemarker，这里推荐使用Thymeleaf。
+SpringBoot2中，后端模板引擎仅支持Thymeleaf和Freemarker，这里简单介绍一下Thymeleaf。
 
 SpringBoot中，引入Thymeleaf模板需要依赖：
 
