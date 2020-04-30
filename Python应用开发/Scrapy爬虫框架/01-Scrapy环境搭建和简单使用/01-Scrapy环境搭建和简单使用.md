@@ -1,12 +1,6 @@
-# scrapy简介
+# Scrapy简介
 
-scrapy是一个用来抓取网站数据的爬虫框架。我们可以扩展这个框架，实现我们自己的爬虫程序。本篇笔记包含scrapy环境搭建，以及一个爬虫的示例程序（来自官网）。
-
-## 讨论一下“框架”的意义
-
-我们编写Python爬虫时，会用到requests，lxml等库，我们使用requests发起HTTP请求，使用lxml解析HTML文档，随着需求越来越复杂，我们还要陆续引入多线程或异步爬虫的实现，持久层的实现等等。但是整个爬虫程序的程序结构需要我们自己设计，例如：有哪些工具类，继承层次是怎样的等等问题。所以scrapy出现了，抽取了一个通用性框架，以复用代码，我们在这个框架基础上进行扩展，实现我们自己的需求。
-
-如果面向对象、各种设计模式非常熟，写一个爬虫框架真的比研究明白spring简单太多，所以上面的问题不是个问题。但是毕竟研究“数据”的大多是搞数学的，不是搞软件的，他们写稍大的程序，软件架构可能写成一坨屎，所以xx框架就出现了，告诉大家：按我要求这么写xx程序，大家都懂。于是大家写出来的都差不多样子，确实大家都能看懂别人写的啥了，而且自己也不用考虑软件架构了，因为已经提前由框架设计好了。
+Scrapy是一个用来抓取网站数据的爬虫框架。我们可以基于这个框架，很方便的实现我们自己的爬虫程序。本篇笔记包含Scrapy环境搭建，以及一个爬虫的示例程序（来自官网）。
 
 官网文档[https://doc.scrapy.org/en/latest/index.html](https://doc.scrapy.org/en/latest/index.html)
 
@@ -14,18 +8,18 @@ scrapy是一个用来抓取网站数据的爬虫框架。我们可以扩展这�
 
 本文以Ubuntu14.04为例，我们使用Python3。
 
-官网文档建议使用venv虚拟环境，我觉得无所谓吧，全局安装的scrapy有命令行工具会自动安装到`/usr/local/bin/scrapy`，如果装虚拟环境还要切环境，太麻烦了，只是要小心别在Python2和3上同时装，否则就冲突了。
+官网文档建议使用venv虚拟环境，我觉得无所谓吧，全局安装的Scrapy有命令行工具会自动安装到`/usr/local/bin/scrapy`，如果装虚拟环境还要切环境，太麻烦了，只是要小心别在Python2和3上同时装，否则就冲突了。
 
 安装：
 ```
 pip3 install Scrapy
 ```
 
-这里我们安装的是当前的最新版本scrapy 1.4.0
+这里我们安装的是当前的最新版本Scrapy 1.4.0。
 
-## scrapy简单例子
+## Scrapy简单例子
 
-接下来我们写一个简单的例子，这个例子来自官网文档Tutorial部分。我们爬取的数据是scrapy提供的一个测试网站[http://quotes.toscrape.com/](http://quotes.toscrape.com/)。
+接下来我们写一个简单的例子，这个例子来自官网文档Tutorial部分。我们爬取的数据是Scrapy提供的一个测试网站[http://quotes.toscrape.com/](http://quotes.toscrape.com/)。
 
 ### 创建项目
 
@@ -166,7 +160,9 @@ class QuotesSpider(scrapy.Spider):
 			}
 ```
 
-首先`start_requests()`函数被干掉了，这里我们使用了`start_urls`属性。实际上结果是一样的，原来`start_requests()`的作用就是定义几个URL，然后创建Request的实例，此处这种写法，scrapy也能正确读到`start_urls`，为每个URL自动创建Request，回调parse()，具体请看scrapy.Spider的代码。虽然官网给出的例子是这么写的，我还是建议覆盖一下`start_requests()`，实际使用一下就会发现原因了。当然`url`定义成类属性完全没什么问题。
+首先`start_requests()`函数被干掉了，这里我们使用了`start_urls`属性。实际上结果是一样的，原来`start_requests()`的作用就是定义几个URL，然后创建Request的实例，此处这种写法，scrapy也能正确读到`start_urls`，为每个URL自动创建Request，回调parse()，具体请看scrapy.Spider的代码。
+
+虽然官网给出的例子是这么写的，我还是建议覆盖一下`start_requests()`，实际使用一下就会发现原因了。当然`url`定义成类属性完全没什么问题。
 
 parse()现在返回了一个生成器，之前的代码是没返回值的。我们使用css选择器选取了几个数据。我们再运行Spider看看效果：
 
@@ -183,7 +179,7 @@ parse()现在返回了一个生成器，之前的代码是没返回值的。我�
 
 ## 数据持久化
 
-持久化scrapy抓取到的数据最简单的方式，是使用`Feed exports`，直接使用命令：
+持久化Scrapy抓取到的数据最简单的方式，是使用`Feed exports`，直接使用命令：
 
 ```
 scrapy crawl quotes -o quotes.json

@@ -16,7 +16,7 @@ class scrapy.spiders.Spider
 
 我们编写的自定义Spider，必须继承这个类。`scrapy.Spider`中什么都没做，只是提供了一个默认的函数`start_requests()`，它的作用是根据`start_urls`发起初始请求。scrapy要求我们我们继承这个类的目的，就是把这个类作为模板，使程序结构更加清晰而已。
 
-## 常用属性
+### 常用属性
 
 下面我们看看Spider类中常用的属性：
 
@@ -25,7 +25,34 @@ class scrapy.spiders.Spider
 * `start_urls` 爬虫发起初始请求的URL。
 * `custom_settings` 这个属性是字典类型，可以包含对scrapy的设置信息，指定这个属性，就会覆盖`settings.py`中的设置的全局定义。
 
-## 常用方法
+### 常用方法
 
 * `start_requests()` 这个方法我们已经很熟悉了，是用来发起初始请求的。
 * `parse(response)` 这个是Request对象的默认回调函数。
+
+## parse(response) 处理逻辑
+
+我们爬虫的处理逻辑都定义在`parse(response)`这个方法中，第一节的例子我们已经介绍过了。
+
+`parse()`中，我们可以`yield`返回一个`Item`对象，代表一个采集到的数据实体。也可以`yield`返回一个`Request`对象，那么Scrapy框架将自动再发起一个新请求。
+
+返回`Request`对象时，有两个经常使用的关键字参数，这里需要介绍下。下面是一个例子：
+
+```python
+def parse(self, response):
+    # ... 这里省略不相关的代码 ...
+    yield response.follow(
+        chapter_href,
+        meta={
+            'nid': response.meta['nid'],
+            'chapter_title': chapter_title,
+            'chapter_order': self.chapter_order
+        },
+        callback=self.parse_novel_page)
+```
+
+上面代码中，`chapter_href`是链接地址，我们不用关心，主要看`meta`和`callback`这两个关键字参数。
+
+`meta`用于给子请求传递数据，这个实际开发中是肯定会用到的，因为嵌套请求中，父子请求一般是有某种关联的，子请求一般都得通过某种主键一类的标识，知道它的父请求是谁，这种情况就会用到`meta`参数。
+
+另外，Spider组件默认只有个`parse()`处理请求返回内容，如果父子请求的结果都传给`parse()`处理，代码就比较乱了。实际上我们可以再任意定义个方法用于处理子请求，传给`callback`参数。上面代码中，子请求就会由`parse_novel_page()`处理。

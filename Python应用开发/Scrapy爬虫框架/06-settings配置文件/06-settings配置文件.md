@@ -52,3 +52,7 @@ class MySpider(scrapy.Spider):
 ### DEPTH_LIMIT
 
 爬虫的最大搜索深度。默认为0，表示深度不限。
+
+## Spider局部配置
+
+如果`settings.py`中的全局配置不符合某个Spider的要求，我们可以在Spider中单独进行局部配置，这需要用到`custom_settings`字段，其类型是一个字典，配置项和`settings.py`相同。
