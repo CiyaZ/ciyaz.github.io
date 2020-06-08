@@ -99,6 +99,47 @@ const int i = 100;
 
 值传递、引用传递规则和Java相同，string同样为不可变对象（看起来像是值传递）。
 
+## struct结构体
+
+C#支持`struct`结构体数据类型，和`class`不同，结构体是存储在栈上的，它是值传递的。
+
+用结构体封装一些数学计算中的数据类型有更好的性能，比如Unity中的`Vector3`等就是通过结构体封装的，其他方面就比较少用了。
+
+一个结构体例子：
+```csharp
+struct Vector2
+{
+    public float X { get; set; }
+    public float Y { get; set; }
+
+    public Vector2(float x, float y):this()
+    {
+        this.X = x;
+        this.Y = y;
+    }
+
+    public override string ToString()
+    {
+        return "{x:" + this.X + ", y:" + this.Y + "}";
+    }
+}
+```
+
+调用结构体：
+```csharp
+Vector2 v = new Vector2(0f, 0f);
+Console.WriteLine(v);
+Console.WriteLine(v.X);
+Console.WriteLine(v.Y);
+```
+
+结构体和类的使用有些区别需要注意：
+
+1. 结构体是值传递的，实例化后存储在栈上，因此也不能定义析构函数
+2. 结构体的属性不能设置默认值
+3. 结构体中我们不能覆盖默认构造函数，编写有参的构造函数需要调用`:this()`
+4. 结构体不支持继承，但可以实现接口
+
 ## foreach循环
 
 C#的foreach循环和Java写法不太一样。
