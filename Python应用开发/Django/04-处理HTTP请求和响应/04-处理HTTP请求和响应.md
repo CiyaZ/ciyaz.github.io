@@ -120,7 +120,7 @@ $(function () {
 });
 ```
 
-上面代码中，首先获取`csrfmiddlewaretoken`参数，请求的JSON直接放在表单的`msg`参数中。
+上面代码中，首先从模板页面中获取`csrfmiddlewaretoken`参数，请求的JSON直接放在表单的`msg`参数中。
 
 ```python
 request.POST.get('msg')
@@ -130,41 +130,11 @@ request.POST.get('msg')
 
 实际上，这种方式比较别扭，而且如果是前后端分离的开发模式，前端页面是完全不使用模板引擎解析的（通常是使用Nginx直接提供静态文件，仅对API请求进行反向代理），这样就没法从页面上获取CSRF参数了。
 
-方式2：使用Ajax获取CSRF_TOKEN，将其加入请求header中。
+方式2：获取CSRF_TOKEN，将其加入请求header中。
 
-Django除了支持将CSRF_TOKEN作为请求字段，还支持将其作为请求header传递给服务器，此外，我们也可以用View组件中Python代码的形式获取CSRF_TOKEN，然后通过Ajax的方式将其传给前端。
+Django除了支持将CSRF_TOKEN作为请求字段，还支持将其作为请求header传递给服务器。
 
-前端请求CSRF_TOKEN：
-
-```javascript
-window.onload = function () {
-    $.ajax({
-        type: "GET",
-        async: true,
-        url: '/csrftest/token',
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (msg) {
-            app.csrf_token = msg.csrf_token;
-        },
-        error: function (err) {
-            alert('获取token请求失败!');
-        }
-    });
-};
-```
-
-后端获取CSRF_TOKEN并返回：
-
-```python
-def get_token(request):
-    csrf_token = csrf.get_token(request)
-    return JsonResponse({
-        'csrf_token': csrf_token
-    })
-```
-
-前端发送POST请求传递Json数据：
+这里前端发送POST请求传递Json数据，CSRF_TOKEN被加入了请求头中：
 
 ```javascript
 function postJson() {
@@ -190,7 +160,19 @@ function postJson() {
 }
 ```
 
-如果是不使用模板引擎前后端完全分离开发的情况，实际上有一个CSRF_TOKEN获取时机的问题，上面代码中，我们在`window.onload()`时就获取了这个参数，除此之外，也可能存在发起POST请求前，现获取CSRF_TOKEN的情况，这时就需要注意异步顺序了。
+实际上，上述代码经常出现在前后端分离的项目中，这种情况可能并不使用Django模板，那么如何获取CSRF_TOKEN呢？
+
+一种方式是请求后端再生成一个CSRF_TOKEN，另一种方式是直接读取`cookie`中的`csrftoken`（但第一次请求可能该cookie不存在），两种方法可能需要交替使用。
+
+下面代码中，我们用View组件中Python代码的形式获取CSRF_TOKEN，然后通过Ajax的方式将其传给前端。后端获取CSRF_TOKEN并返回：
+
+```python
+def get_token(request):
+    csrf_token = csrf.get_token(request)
+    return JsonResponse({
+        'csrf_token': csrf_token
+    })
+```
 
 ### 处理文件上传
 
