@@ -6,7 +6,7 @@ Django REST Framework（以下简称drf）是Django框架中，用来开发Web�
 
 ## drf简介
 
-通过前面学习我们知道，Django的一个缺点就是前后端高度耦合，甚至出现了`form`组件这种邪路，做些个人博客、个人小型CMS之类的站点确实方便，但这已经无法满足现代较大型应用系统的建设需求了。
+通过前面学习我们知道，Django的一个缺点就是前后端高度耦合，甚至出现了`form`组件这种邪路，做些个人信息展示网站之类的站点确实方便，但这已经无法满足现代较大型应用系统的建设需求了。
 
 现在前端的发展非常迅速，早已经不是撸几个静态页，每个页面写千十来行难以维护的JQuery代码的时代了，前端项目的工程化和用户体验也得到了极大提升，现在后端更应把精力放在接口和业务逻辑上。
 
@@ -14,14 +14,14 @@ Django本体在这方面并没有多考虑，因此直接使用Django编写Web�
 
 ## drf的主要功能
 
-drf主要功能分两部分：
+drf封装了很多常用功能，便于我们开发接口：
 
-1. 序列化器：使用drf的序列化器能够很方便的将查询模型的结果集映射到JSON。
-2. 视图模板：drf提供了GenericAPIView和一系列Mixins，很多增删改查其实我们不需要手写，直接声明式的配置相关组件就可以自动生成相关功能了。
+* 便于使用的请求和响应组件
+* Serializer序列化器
+* 接口认证和权限控制组件
+* 基于CRUD封装的组合视图、Mixins（一些可组合的CRUD功能）
 
-注：drf中mixins是指一种能够由视图继承的类，它们以REST规范实现了各种常用功能，比如查询列表、更新模型等，我们的视图采用多继承的方式继承这些mixins组件，就能自动实现相应功能。
-
-当然，实际开发中肯定会碰到内置mixins无法满足的时候，我们基于drf的序列化器，手动写自己的视图也是很常见的状况。
+等等。
 
 ## 配置drf框架
 
@@ -113,7 +113,7 @@ urlpatterns = [
 ]
 ```
 
-在`views.py`中，我们编写了一个`Function based view`，注意`@api_view`这个装饰器，它是drf提供的，用于处理drf专用请求响应组件，使用drf时我们需要带上这个装饰器（注：后面会用到Class based view，那边会使用另一种写法）。
+在`views.py`中，我们编写了一个`Function based view`，注意`@api_view`这个装饰器，它是drf提供的，用于处理drf专用请求响应组件，使用drf时我们需要带上这个装饰器（注：还有一种Class based view的写法，可以参考文档）。
 
 代码逻辑很简单，我们查询出结果列表后，将其传入序列化器。`many=True`这个关键字参数意味着返回的结果是多个而不是一个。
 
@@ -155,6 +155,58 @@ urlpatterns = [
 ```
 
 上面代码中，我们通过一个`re_path`指定了一个带路径参数的路由，在`views.py`中，我们通过路径参数传入的主键进行查询，查询结果通过drf的序列化器和Response组件返回。如果查询无结果，则返回空时对应的内容，这里我们还设置了HTTP响应码为`404`。
+
+#### 封装Response
+
+实际开发中，我们推荐返回这种格式的内容（不推荐用HTTP自带的响应状态和响应码）：
+
+```json
+{
+    'rspCode': 0,
+    'rspMsg': '操作成功',
+    'data': [...]
+}
+```
+
+drf中，我们可以继承自带的Response封装我们自己的响应组件，下面是一个例子：
+
+```python
+from rest_framework.response import Response
+
+
+class APIResponse(Response):
+    """定制Response"""
+
+    def __init__(self, data=None, api_code='0', api_msg='操作成功',
+                 status=None, template_name=None, headers=None,
+                 exception=False, content_type=None):
+        api_data = {
+            'rspCode': api_code,
+            'rspMsg': api_msg,
+            'data': data
+        }
+        super().__init__(api_data, status,
+                         template_name, headers,
+                         exception, content_type)
+
+    @staticmethod
+    def success(data=None, status=None, template_name=None, headers=None,
+                exception=False, content_type=None):
+        return APIResponse(data, '0', '操作成功', status, template_name,
+                           headers, exception,
+                           content_type)
+
+    @staticmethod
+    def failure(data=None, api_code='5000', api_msg='操作失败',
+                status=None, template_name=None, headers=None,
+                exception=False, content_type=None):
+        return APIResponse(data, api_code, api_msg,
+                           status, template_name,
+                           headers, exception,
+                           content_type)
+```
+
+这里我们增加了两个参数`api_code`和`api_msg`，用于指定接口响应码和响应信息。
 
 ### 使用drf读取请求内容
 
@@ -333,41 +385,29 @@ def get_author_list(request):
 
 实际上，`ModelSerializer`就是通过指定的`fields`属性，自动包装了一些字段，因此我们通常都是使用`ModelSerializer`，这样更加方便一些。
 
-## 类视图和Mixins
+## 认证和权限组件
 
-### class based view
+drf封装了一些权限组件（基于auth），我们开发中无需编写检查权限的代码，配置好相关组件即可。
 
-我们之前一直定义View的方式都是function based view，也就是一个函数处理一个请求，这种方式确实简单易用，也是最推荐的开发方式。
+例子代码：
 
-但函数难以像类一样实现继承、多继承，也不方便针对一个请求定义多个处理方式（比如`GET /books`和`POST /books`在后端是两种处理逻辑，使用函数就得在一个函数内判断请求方法，写起来不太优雅），因此drf提供的视图模板都需要结合class based view来使用。
-
-### GenericViewSet和Mixins
-
-drf中，我们的View可以继承`GenericViewSet`，它封装了一些基础逻辑供我们使用，结合Mixins能够无需编写代码实现各种常用功能，这里直接给出一个例子。
-
-views.py
 ```python
-class AuthorView(GenericAPIView, ListModelMixin):
-    queryset = Author.objects.all()
-    serializer_class = AuthorSerializer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def query_data(request):
+    # ...
 ```
 
-urls.py
-```python
-urlpatterns = [
-    ...
-    path('authors/', views.AuthorView.as_view()),
-    ...
-]
-```
+上面代码中，我们使用`permission_classes`装饰器配置了一个一个`IsAuthenticated`，未认证的匿名用户请求这个接口，就会返回`HTTP 403 Forbidden`。
 
-上面代码中，我们使用了`ListModelMixin`，它能直接通过`list()`返回多个查询结果，不需要我们手动调用序列化器了。
+drf封装了很多权限组件，比如检查是否认证、是否为管理员（is_staff）等，可以在参考中文档查阅。
 
-未完，待续
+## GenericAPIView和Mixins
 
-## 相关配置
+这部分由于封装耦合度过高，在实际开发中，其实很难用起来，就不再介绍了。
 
-### CSRF检查
+RESTful是个理想状态下的设计，并不是完全切合实际需求的，我们的实际项目需要考虑很多额外的东西，这种情况下drf中这些高度封装的组件可扩展性就不够理想了。
