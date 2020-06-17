@@ -63,7 +63,7 @@ class ClickCount extends Component {
         super();
         //state对象用于存储组件的状态（数据）
         this.state = {cnt: 0};
-        //将this绑定到btnClick函数，这个写法确实十分尴尬，但是它必不可少
+        //将this绑定到btnClick函数。实际上，也可以将btnClick定义为箭头函数，就没有this的问题了。这两种写法都很常见。
         this.btnClick = this.btnClick.bind(this);
     }
 
