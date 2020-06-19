@@ -18,4 +18,4 @@ src/main/resources/static/jquery-3.3.1/* linguist-vendored
 *.js linguist-language=Java
 ```
 
-这意味着把所有`JavaScript`源码当`Java`算，显然是不对的，我们仓库的源代码语言统计比例也会明显错误。
+这意味着把所有`JavaScript`源码当`Java`算，显然是不对的，我们仓库的源代码语言统计比例也会明显错误，这里建议还是忽略掉所有库目录。
