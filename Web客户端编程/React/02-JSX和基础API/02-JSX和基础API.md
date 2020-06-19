@@ -4,7 +4,11 @@
 
 ## JSX文件
 
-在React中，我们使用React专门定义的JSX写法定义组件。JSX是JavaScript的语法扩展，它的语法专门适用于编写React组件，我们可以使用`.js`或是`.jsx`作为文件后缀，大部分IDE或是文本编辑器都能正确识别。
+在React中，我们使用React专门定义的JSX写法定义组件。JSX是JavaScript的语法扩展，它的语法专门适用于编写React组件，我们可以使用`.js`或是`.jsx`作为文件后缀，大部分IDE或是文本编辑器都能正确识别。JSX文件必须引入React才能使用：
+
+```javascript
+import React from 'react';
+```
 
 jsx和js文件的主要区别就是jsx中我们能直接混合HTML标签编写代码，比如像下面这样：
 
