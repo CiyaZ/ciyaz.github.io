@@ -61,6 +61,7 @@ under-line style h2
 行内代码：`npm install`
 
 代码块：
+
 ```python
 for i in range(0, 1):
   print("hello")
@@ -94,3 +95,13 @@ for i in range(0, 1):
 * 换行：两次Enter才能换行（也就是两个段落需要间隔一个空行）
 * HTML兼容：可以配合使用HTML完成Markdown无法完成的效果（比如插入HTML5视频）
 * 链接：允许http的URL，本地文件的URL，相对URL
+
+## 渲染Markdown
+
+我们在浏览器中渲染Markdown可以使用`marked.js`这个库：
+
+[https://github.com/markedjs/marked](https://github.com/markedjs/marked)
+
+如果还需要代码着色功能，可以配合使用`highlight.js`：
+
+[https://highlightjs.org/](https://highlightjs.org/)
