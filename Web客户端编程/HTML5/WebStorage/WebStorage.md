@@ -7,6 +7,8 @@ WebStorage简单来说，就是操作一些键值对。
 * session storage：保存在session中，一次会话的临时保存
 * local storage：保存在本地磁盘中，永久保存
 
+注：localStorage默认没有超时功能，是永久生效的（不包括用户手动清理缓存）。那么如何给localStorage设置超时呢？可以在存入的数据加一个时间戳，然后判断就行了。
+
 ## Web Storage存取
 
 * length属性 表示storage大小
