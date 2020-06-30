@@ -2,7 +2,7 @@
 
 Unity的UI组件，使用RectTransform而不是我们通常使用的Transform，它和Anchor配合使用能够实现适合游戏的复杂、跨屏幕兼容的UI布局。
 
-Anchor（UI锚点）是UGUI中一个比较特殊的概念，UGUI和我们以往使用的各种GUI框架（Android、Qt、Web等）都不一样，Anchor用于UI组件的布局。它理解起来比较复杂，但其实使用非常简单。
+Anchor（UI锚点）是UGUI中一个比较特殊的概念，UGUI和我们以往使用的各种GUI框架（Android、Qt、Web等）都不一样，多出一个用于UI组件的布局Anchor的概念。它理解起来比较复杂，但其实使用非常简单。
 
 ## Anchor
 
