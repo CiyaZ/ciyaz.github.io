@@ -2,7 +2,7 @@
 
 AJAX通常通过JSON和后台交互数据，由于HTTP协议决定了页面的请求-响应模型是同步的，因此异步的AJAX出现了，弥补了用户体验上的不足。这篇笔记记录了SpringMVC如何处理AJAX数据。
 
-## 处理AJAX请求例子
+## 处理AJAX请求
 
 我们直接看一个使用SpringMVC处理AJAX请求的例子。
 
@@ -197,4 +197,20 @@ public class AjaxController
 
 ## RestController
 
-在新版本的SpringBoot中，我们通常使用@RestController代替@Controller实现接口服务的控制器，使用这个注解我们就能省去@ResponseBody了，但是@RequestBody依然不能省略。
+在新版本的SpringBoot中，我们通常使用`@RestController`注解代替`@Controller`注解实现接口服务的控制器，使用这个注解我们就能省去@ResponseBody了，但是@RequestBody依然不能省略。
+
+```java
+@RestController
+public class MyController
+{
+	...
+}
+```
+
+## ajax文件上传注意
+
+有时我们会遇到文件需要异步上传的问题，具体实现可以参考`Web客户端编程`相关章节，这里就不重复了。
+
+这里要注意，此时我们千万不要别出心裁的用Json（base64）的形式上传文件。二进制文件编码成base64后，数据会变大，此时经常发生请求体大小超过网关、中间件、框架的数据大小限制，进而触发一些莫名其妙的错误。
+
+对于分布式应用，内部调用时，无论是使用Json还是二进制报文传递应用数据，也都尽量不要直接传文件体，而应该使用专门的OSS系统上传，应用数据中只传递URL或一个文件对象的主键，以免造成不必要的麻烦。
