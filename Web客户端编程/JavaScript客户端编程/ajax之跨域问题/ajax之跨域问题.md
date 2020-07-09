@@ -1,4 +1,4 @@
-# ajax之jsonp
+# ajax之跨域问题
 
 ## 跨域
 
@@ -8,7 +8,7 @@
 
 ## 跨域ajax的解决方案
 
-### HTTP协议头
+### CORS协议头
 
 ```
 Access-Control-Allow-Origin
