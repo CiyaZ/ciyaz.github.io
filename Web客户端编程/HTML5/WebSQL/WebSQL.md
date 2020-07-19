@@ -119,7 +119,7 @@ chrome调试器
 
 ![](res/3.png)
 
-实际上firefox并没有实现Web SQL这个功能，firefox只有indexed db功能。查看firefox调试器的存储页面，也没有Web SQL。firefox仅支持Indexed DB，一种以NoSQL组织数据的数据库。
+实际上firefox并没有实现Web SQL这个功能，firefox只有indexed DB功能。查看firefox调试器的存储页面，也没有Web SQL。firefox仅支持Indexed DB，一种以NoSQL组织数据的数据库。
 
 ![](res/4.png)
 
