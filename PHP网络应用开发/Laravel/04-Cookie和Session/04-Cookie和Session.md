@@ -14,7 +14,7 @@ Laravel中，支持将Session缓存到文件（默认）、数据库、Redis、M
 
 PHP连接Redis需要安装`php_redis`这个扩展，具体可以参考`PHP网络应用开发/扩展库/连接redis`章节。Laravel官网文档中使用的是一个叫做`predis`的`composer`扩展，安装难，配置坑，性能差，这里就不用了。
 
-装好`php_reids`后，还需要在工程配置文件中进行Session缓存的中间件配置。首先在`database.php`中，加入一个Redis连接：
+装好`php_redis`后，还需要在工程配置文件中进行Session缓存的中间件配置。首先在`database.php`中，加入一个Redis连接：
 
 ```php
 'redis' => [
