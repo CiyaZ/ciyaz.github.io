@@ -27,7 +27,7 @@ composer和npm等包管理工具都比较像，下面以Windows系统为例介�
 安装好composer后，我们可以配置上国内镜像加快下载速度。
 
 ```
-composer config -g repo.packagist composer https://packagist.phpcomposer.com
+composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 ```
 
 这个操作会在`C:\Users\<用户名>\AppData\Roaming\Composer\config.json`自动添加相应的配置。
@@ -98,6 +98,23 @@ composer install
 ```
 
 ## 其它命令
+
+这里再介绍几个composer的常用命令。
+
+composer自我升级：
+```
+composer self-update
+```
+
+清除缓存：
+```
+composer clear
+```
+
+更新`composer.lock`文件：
+```
+composer update --lock
+```
 
 更多有关composer命令行的内容这里就不多介绍了，请参考官方文档：
 
