@@ -40,7 +40,11 @@ class UserController extends Controller
 }
 ```
 
-注：如果读取的参数不存在，将返回`null`。
+如果读取的参数不存在，将返回`null`。
+
+`input()`也可以接收两个参数，第二个参数为默认值。
+
+另外要注意一点，`input()`的返回值，只可能是`array`、`string`或`null`，如果是数字的类型，需要我们自己手动转换。
 
 路由配置中，需要配置对应的请求地址和控制器方法。
 
@@ -93,6 +97,21 @@ $full_url = $request->fullUrl();
 $user_agent = $request->header('User-Agent');
 ```
 
+#### 判断属性是否存在
+
+我们代码中使用请求参数前，一般都会检查该参数是否存在。一般的写法是进行`if`判断，如果其不为`null`（更进一步的，还可能需要判断不为空字符串），则视为存在。
+
+Laravel对这个功能进行了封装，我们可以使用`$request->has()`来判断请求参数是否为`null`，`$request->filled()`来判断请求参数是否非`null`且非空字符串。
+
+例子：
+```php
+if ($request->filled('aa')) {
+    // ...
+} else {
+    abort(400);
+}
+```
+
 ### 读取Json请求
 
 除了表单形式的请求参数，和REST风格的路径参数，将请求内容封装成请求体中的Json对象也是常用的方式，尤其是当我们的表单非常复杂，带有很多动态配置的时候。
@@ -120,6 +139,31 @@ axios.post('/test', jsonObj)
 // 获取请求Json对象
 $req_json = $request->input();
 ```
+
+### 文件上传
+
+我们知道HTTP协议中，文件上传使用的请求体格式为`multipart/form-data`，手动解析是比较麻烦的。但Laravel对此做了封装，只需要用`$request->file()`读取出来就行了。
+
+```php
+$file = $request->file('file');
+```
+
+#### 验证文件是否有效
+
+同请求参数类似，我们也可以用`$request->hasFile()`来判断文件字段是否存在，以及`$request->file('file')->isValid()`来判断上传文件是否有效。
+
+```php
+    if ($request->hasFile('file') && $request->file('file')->isValid()) {
+        $file = $request->file('file');
+        // ... 对文件的后续处理
+    } else {
+        abort(400);
+    }
+```
+
+#### 存储文件
+
+存储文件请参考Laravel的文件系统相关章节。
 
 ## 响应 Response
 
@@ -179,6 +223,32 @@ return response()->json([
 ```
 
 Laravel会自动帮我们设置好`Content-Type: application/json`响应头，告知浏览器响应数据的媒体类型，我们不需要像原生PHP开发一样手动设置了。
+
+### 响应文件下载
+
+我们知道HTTP实现文件下载，一个是要将数据写到输出流，另外还需要设置`Content-Diposition`响应头。Laravel对文件下载的这些逻辑做了封装，使用非常简单。
+
+```php
+public function downloadLocal(Request $request)
+{
+    $file_id = $request->input('file_id');
+    try {
+        return response()->download(storage_path('app/public/avatars/' . $file_id));
+    } catch (FileNotFoundException $e) {
+        return response('出错了', 500);
+    }
+}
+```
+
+我们直接使用`$response()->download()`即可响应文件下载，参数是文件路径，响应头信息会自动添加。
+
+如果返回的是图片、PDF文档等，我们不希望浏览器下载，而是直接加载预览，那直接返回`response()->file()`就可以了。
+
+```php
+return response()->file(storage_path('app/public/avatars/' . $file_id));
+```
+
+这种响应方式不会增加`Content-Type: application/json`响应头。
 
 ### 重定向
 
