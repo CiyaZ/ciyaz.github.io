@@ -48,10 +48,12 @@ protected $table = 't_student';
 ### 主键
 
 ```php
-protected $primarykey = 'student_id';
+protected $primaryKey = 'student_id';
 ```
 
-`$primarykey`可以指定表的主键，默认名为`id`。
+`$primaryKey`可以指定表的主键，默认名为`id`。
+
+**巨坑注意**：`primaryKey`的`K`为大写，写错会出现诡异问题，而且极难发现！！
 
 ```php
 public $incrementing = true;
@@ -124,7 +126,7 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     protected $table = 't_student';
-    protected $primarykey = 'student_id';
+    protected $primaryKey = 'student_id';
     public $incrementing = true;
     public $timestamps = false;
 }
