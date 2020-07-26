@@ -34,6 +34,15 @@ extension=php_pdo_mysql.dll
 composer create-project laravel/laravel blog
 ```
 
+也可以全局安装Laravel安装器：
+```
+composer global require laravel/installer
+```
+
+```
+laravel new blog
+```
+
 Laravel即使创建空项目也有很多依赖包，因此务必要添加`composer`的国内镜像，而且第一次创建项目将会非常漫长（还可能有某个包偶然下载失败的情况），请耐心等待。
 
 用PHP内置服务器启动项目：
