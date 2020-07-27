@@ -406,6 +406,25 @@ def query_data(request):
 
 drf封装了很多权限组件，比如检查是否认证、是否为管理员（is_staff）等，可以在参考中文档查阅。
 
+## 限流组件
+
+drf的限流（throttle）组件能够限制IP或用户在特定时间段内的访问次数。
+
+全局配置中，我们可以指定`throttle class`，以及对应的默认最大频率限制。下面我们为全局配置了`AnonRateThrottle`，并限制最大请求频率为每分钟一次。
+
+```python
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '1/minute'
+    }
+}
+```
+
+请求频率，可以通过`second`、`hour`、`minute`、`day`指定。
+
 ## GenericAPIView和Mixins
 
 这部分由于封装耦合度过高，在实际开发中，其实很难用起来，就不再介绍了。
