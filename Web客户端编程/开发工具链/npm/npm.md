@@ -48,6 +48,8 @@ npm是nodejs的包管理工具，不仅是nodejs，在浏览器客户端开发�
 * 卸载本地安装的模块：`npm uninstall <module>`
 * 卸载全局安装的模块：`npm uninstall <module> -g`
 
+注：开发中，我们如果想要删除一个不用的依赖模块，更常见直观的做法是在`package.json`中删除该模块依赖，然后执行`npm install`。
+
 ## 更新模块（npm update）
 
 `npm update <module>`

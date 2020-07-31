@@ -4,7 +4,7 @@ Promise是一种异步编程模型，主要用来解决大量回调函数嵌套�
 
 大量回调函数嵌套可读性非常差，使用Promise能提高代码可读性，帮助开发者理清思路。但是前提是代码的读者也学习过Promise模式，并十分熟悉异步编程，否则可读性就无从谈起了。
 
-下面是一个简单的Promise使用例子，下面代码通过Promise实现了回调。
+下面是一个简单的Promise使用例子，代码通过Promise实现了回调。
 
 ```javascript
 let promise = new Promise((resolve, reject) => {
@@ -35,10 +35,27 @@ promise.then((success)=>{
 
 `then(onfulfilled, onrejected)`函数用于为Promise模型的异步操作绑定回调函数，它接收两个函数作为参数：
 
-* `onfulfilled`：Promise对象中的异步操作执行成功时回调（resolve被调用）
-* `onrejected`：Promise对象中的异步操作执行失败时回调（reject被调用，一般不在then函数中使用这个参数）
+* `onfulfilled`：Promise对象中的异步操作执行成功时回调（`resolve()`被调用）
+* `onrejected`：Promise对象中的异步操作执行失败时回调（`reject()`被调用，一般不在`then()`函数中使用这个参数，而是在`catch()`中）
 
-`then()`的返回值也是一个promise对象，因此我们能够实现链式调用，`onfulfilled`函数的返回值会决定链式调用的下一步Promise状态，这个不太好描述，我们直接写一个例子：
+## Promise.prototype.catch()
+
+`catch(onrejected)`和`then()`函数其实是一样的，只不过没有第一个参数`onfulfilled`，仅能用于捕获失败的情况。
+
+上面介绍过then函数有两个参数，我们可以向then函数传入两个回调函数参数，分别用来处理异步操作执行成功和执行失败的情况，但是这样写不太美观，推荐使用`catch()`函数代替`then()`的第二个参数。如果`then()`函数没有指定执行失败的回调，它就会把Promise对象一步步传下去，直到链式调用遇到`catch()`函数。
+
+## `then()`函数的返回值
+
+`then()`的返回值是一个`Promise`对象，根据回调函数`onfulfilled`的返回值，它稍微有点复杂：
+
+1. 如果回调函数不返回任何值，`then()`返回一个`fulfilled`的`Promise`，其值为`undefined`
+2. 如果回调函数返回一个值，`then()`返回一个`fulfilled`的`Promise`，其值为回调函数的返回值
+3. 如果回调函数抛出错误，`then()`返回一个`rejected`的`Promise`，值为回调函数抛出的值
+4. 如果回调函数返回一个`Promise`，`then()`也返回一个相同状态的`Promise`
+
+因为返回的也是`Promise`，因此我们能够在`then()`上实现链式调用，`onfulfilled`函数的返回值会决定链式调用的下一步`Promise`状态。
+
+这个不太好描述，我们直接写一个例子：
 
 ```javascript
 let promise = new Promise((resolve, reject) => {
@@ -58,14 +75,14 @@ promise
         console.log(success);
         throw 'error message 3';
     })
-    //返回一个新Promise对象，该对象执行成功，Promise变为fulfilled状态
+    //返回一个新Promise对象，该Promise对象执行成功，变为fulfilled状态
     .catch((err) => {
         console.log(err);
         return new Promise((resolve, reject) => {
             resolve('success message 4');
         })
     })
-    //返回一个新Promise对象，该对象执行失败，Promise变为rejected状态
+    //返回一个新Promise对象，该Promise对象执行失败，变为rejected状态
     .then((success) => {
         console.log(success);
         return new Promise((resolve, reject) => {
@@ -83,14 +100,6 @@ promise
 ```
 
 我们可以想象一下，如果使用嵌套回调的写法，上面代码要嵌套很多很多层，而改为Promise写法，嵌套一层转化为了多写一个链式调用，因此代码可读性就变好了。
-
-注：上面代码中，用到了`catch()`，这个函数和`then()`差不多，只不过是用来接收执行失败状态的。
-
-## Promise.prototype.catch()
-
-`catch()`函数和`then()`函数差不多，上面介绍过then函数有两个参数，我们可以向then函数传入两个回调函数参数，分别用来处理异步操作执行成功和执行失败的情况，但是这样写不太美观，推荐使用`catch()`函数代替`then()`的第二个参数。如果`then()`函数没有指定执行失败的回调，它就会把Promise对象一步步传下去，直到链式调用遇到`catch()`函数。
-
-上面例子代码中，已经演示如何使用`catch()`函数了，它的返回值也是Promise对象，我们可以和`then()`函数结合使用，实现可读性比较强的链式调用。
 
 ## Promise.all()
 

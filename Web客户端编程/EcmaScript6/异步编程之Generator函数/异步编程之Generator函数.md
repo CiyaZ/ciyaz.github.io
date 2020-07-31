@@ -1,8 +1,6 @@
 # 异步编程之Generator函数
 
-Generator（中文翻译为生成器，还有需要配合使用的关键字yield，这名字起得无法理解），我在写C#和Python时，经常结合协程使用，是比较常用的语法。
-
-ES6中也引入了Generator函数，它是一种新的异步编程模型，JavaScript语言中大量的嵌套回调写法，使用协程式写法能帮助我们理清异步操作的逻辑，极大的提升我们代码的可读性，这篇笔记我们主要记录JavaScript中的Generator函数。
+ES6中引入了Generator（生成器）函数。JavaScript语言中存在大量的嵌套回调写法，如果使用Generator配合Promise的写法，能帮助我们理清异步操作的逻辑，极大的提升我们代码的可读性，这篇笔记我们主要记录JavaScript中的Generator函数用法。
 
 ## Generator函数
 
@@ -36,7 +34,7 @@ Generator函数的返回值是一个对象，`value`是`yield`返回的值，`do
 
 ### for...of... 迭代Generator函数输出
 
-我们可以使用`for...of...`迭代Generator函数的输出：
+我们可以使用ES6引入的`for...of...`迭代Generator函数的输出：
 
 ```javascript
 function *foo() {
@@ -59,7 +57,7 @@ for(let f of fn) {
 
 ### Generator.prototype.next()
 
-`next()`函数可以传一个参数，用于覆盖上一次yield返回的值：
+`next()`函数可以传一个参数，用于覆盖上一次`yield`返回的值：
 
 ```javascript
 function *loop() {
@@ -157,3 +155,58 @@ console.log(fn.next());
 * JavaScript中，`function*`表示表示定义Generator函数，`yield*`也是差不多意思
 
 说实话，C++的说法确实比较绕，但是毕竟是老牌编程语言，基本是个程序员都会，可能一些概念先入为主，这里注意不要把自己搞晕了。
+
+## Generator配合Promise异步编程
+
+使用Generator函数单独的编写同步式代码，可能没什么特别的优势，但编写异步代码时，其作用就凸显出来了。
+
+假设我们有三个异步请求`funcA`、`funcB`、`funcC`，需求要求先调`funcA`，再调`funcB`，最后调`funcC`。如果使用传统的写法，我们不得不嵌套着写三个函数的逻辑，如果只使用Promise，也势必会写一串`then()`的链式调用，那么使用Generator函数此时如何实现呢？
+
+```javascript
+function funcA() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('funcA return');
+        }, 1000);
+    });
+}
+
+function funcB() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('funcB return');
+        }, 1000);
+    });
+}
+
+function funcC() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('funcC return');
+        }, 1000);
+    });
+}
+
+function* gen() {
+    // 顺序编写异步逻辑
+    yield funcA();
+    yield funcB();
+    yield funcC();
+}
+
+const g = gen();
+function next() {
+    const result = g.next();
+    if (result.done) {
+        return;
+    }
+    result.value.then((rsp) => {
+        console.log('rsp', rsp);
+        next();
+    });
+}
+
+next();
+```
+
+如上面代码所示，我们在生成器函数`gen()`中顺序的定义了三个异步操作，它们的返回值都是`Promise`，我们循环调用生成器函数时，只要在`then()`中调用生成器函数的`next()`，就能实现异步逻辑的顺序编写，异步执行了。这样，我们的代码也变得简单易懂，可读性更强了。
