@@ -4,6 +4,8 @@ Webpack是一个web前端打包工具，主要应用于前端项目，Webpack支
 
 目前各种前端MVVM框架的“脚手架”都是基于Webpack和各种插件封装而成的，一些构建和测试运行命令写在`npm scripts`中，我们直接运行一下就行了，非常方便。除此之外，我们自己编写的单页应用，也可以调用Webpack进行打包。本篇笔记以最新的Webpack4为例，结合当前最流行的yarn包管理工具，介绍webpack的简单使用。
 
+文档：[https://www.webpackjs.com/](https://www.webpackjs.com/)
+
 ## Webpack安装
 
 和所有的npm包一样，webpack可以全局安装，也可以局部安装。推荐在项目中使用局部安装，以避免webpack版本冲突带来的问题。
