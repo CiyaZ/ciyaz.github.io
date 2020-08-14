@@ -46,7 +46,7 @@ yarn
 
 添加依赖，会自动写入`package.json`：
 ```
-yarn add <依赖包名>
+yarn add <依赖包名> [可选参数]
 ```
 
 添加时，可选参数有`--dev`、`--peer`、`--optional`，这和npm是一样的。

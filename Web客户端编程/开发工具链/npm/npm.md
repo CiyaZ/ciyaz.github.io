@@ -84,3 +84,5 @@ npm是nodejs的包管理工具，不仅是nodejs，在浏览器客户端开发�
 1. `npm init`：初始化package.json，根据CLI提示输入信息，即可自动创建package.json
 2. `npm adduser`：创建npm账户，根据CLI提示，输入用户名，密码，邮箱
 3. `npm publish`：发布当前目录下的模块
+
+注：如果要发布到公共npm仓库，我们需要在`~/.npmrc`中把国内镜象配置暂时删掉
