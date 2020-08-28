@@ -46,47 +46,21 @@ Activiti是一个重量级的工作流引擎，功能十分复杂（甚至有些
 
 #### Activiti Engine 工作流引擎
 
-有了流程描述文件，剩下的就是Activiti Engine的工作了，Activiti Engine说白了就是一个数据库增删改查系统，它的底层基于MyBatis，支持MySQL、Oracle等主流数据库，我们配好相关配置，Activiti Engine就能自动创建数据表进行工作了。
+有了流程描述文件，剩下的就是Activiti Engine的工作了，Activiti Engine说白了就是一个XML解析和数据库增删改查系统，它的底层基于MyBatis，支持MySQL、Oracle等主流数据库，我们配好相关配置，Activiti Engine就能自动创建数据表进行工作了。
 
 那么我们怎样访问这些数据呢？显然不是直接去查数据库，Activiti提供了业务流程的抽象，并且提供了一系列的Service接口，我们通过调用这些API就可以获得业务流程的每一个细节。我们使用Activiti，其实就是将业务和这些API相结合，实现我们的需求。
 
-<table style="text-align:center">
-  <tr>
-    <td colspan="2">Activiti引擎接口</td>
-  </tr>
-  <tr>
-    <td>接口</td>
-    <td>作用</td>
-  </tr>
-  <tr>
-    <td>RepositoryService</td>
-    <td>用于流程部署，删除，读取流程资源</td>
-  </tr>
-  <tr>
-    <td>IdentifyService</td>
-    <td>身份管理，设置用户、用户组和之间的关联</td>
-  </tr>
-  <tr>
-    <td>RuntimeService</td>
-    <td>用于启动流程实例，操作当前运行的流程信息</td>
-  </tr>
-  <tr>
-    <td>TaskService</td>
-    <td>用于任务管理，通常是操作个人任务和组任务</td>
-  </tr>
-  <tr>
-    <td>FormService</td>
-    <td>表单管理类，配置表单数据</td>
-  </tr>
-  <tr>
-    <td>HistoryService</td>
-    <td>用于操作历史流程信息</td>
-  </tr>
-  <tr>
-    <td>ManagementService</td>
-    <td>用于引擎管理，Activiti引擎监控</td>
-  </tr>
-</table>
+Activiti引擎接口：
+
+| 接口              | 作用                                     |
+| ----------------- | ---------------------------------------- |
+| RepositoryService | 用于流程部署，删除，读取流程资源         |
+| IdentifyService   | 身份管理，设置用户、用户组和之间的关联   |
+| RuntimeService    | 用于启动流程实例，操作当前运行的流程信息 |
+| TaskService       | 用于任务管理，通常是操作个人任务和组任务 |
+| FormService       | 表单管理类，配置表单数据                 |
+| HistoryService    | 用于操作历史流程信息                     |
+| ManagementService | 用于引擎管理，Activiti引擎监控           |
 
 ## jBPM和Activiti
 
