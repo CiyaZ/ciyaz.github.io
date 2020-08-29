@@ -203,7 +203,6 @@ MyServiceTask.java
 ```java
 package com.ciyaz.demo.activiti.service;
 
-import org.activiti.engine.delegate.BpmnError;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
@@ -233,6 +232,8 @@ public class MyServiceTask implements JavaDelegate {
 </userTask>
 ```
 
+上面代码中，`<completionCondition>`指定了一个表达式，其中`nrOfCompletedInstances`是Activiti自带的一个变量，代表当前多实例任务中，已经完成的数量，这里我们设置三个人中有大于等于两个人完成该任务时，流程就向下流转。
+
 BPMN属性：
 
 * `isSequential`：是否为串行任务
@@ -242,4 +243,233 @@ Activiti扩展属性：
 * `activiti:collection`：遍历生成多任务实例的集合
 * `activiti:elementVariable`：遍历集合时存储的变量
 
-（未完待续）
+## Gateway 网关
+
+Activiti中，网关用于控制流程的走向，可以实现流程的分支功能。Activiti定义了四种网关：
+
+* 排他网关 ExclusiveGateway
+* 并行网关 ParallelGateway
+* 包容网关 InclusiveGateway
+* 事件网关 EventGateway
+
+### ExclusiveGateway 排他网关
+
+排他网关可以连接多个条件顺序流，根据判断条件来决定流程接下来的走向。“排他”顾名思义，如果后续有多个顺序流满足判断条件，也只会执行第一个。
+
+![](res/10.png)
+
+```xml
+<exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway" default="flow3"></exclusiveGateway>
+```
+
+BPMN属性：
+
+* `default`：所有后续顺序流都不满足条件时，默认的顺序流
+
+### ParallelGateway 并行网关
+
+并行网关用于将一个流程中可以并行部分拆分或合并。
+
+![](res/11.png)
+
+* 拆分：并行执行后续顺序流
+* 合并：并行顺序流在此等候，直到所有并行顺序流都执行完成
+
+```xml
+<parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
+```
+
+### InclusiveGateway 包容网关
+
+包容网关既可以连接条件顺序流，也可以并行执行，和排他网关的区别是后续可以是多个顺序流并行执行。
+
+![](res/12.png)
+
+```xml
+<inclusiveGateway id="inclusivegateway1" name="Inclusive Gateway"></inclusiveGateway>
+```
+
+## Subprocess 子流程
+
+在实际开发中，业务流程肯定是相当复杂的，编写一个巨大复杂的流程是不合适的，因此划分子流程相当必要。Activiti中的子流程可以分为四种：
+
+* 普通子流程 Subprocess
+* 调用活动 CallActivity
+* 事件子流程 EventSubprocess
+* 事务子流程 TransactionSubprocess
+
+### Subprocess 普通子流程
+
+子流程，即把一部分需要处理的流程归结到一起作为主流程的一部分，使得业务流程更加清晰。
+
+![](res/13.png)
+
+```xml
+<subProcess id="subprocess1" name="Sub Process">
+  <startEvent id="startevent2" name="Start"></startEvent>
+  <endEvent id="endevent1" name="End"></endEvent>
+  <userTask id="usertask2" name="User Task"></userTask>
+  <sequenceFlow id="flow3" sourceRef="startevent2" targetRef="usertask2"></sequenceFlow>
+  <sequenceFlow id="flow4" sourceRef="usertask2" targetRef="endevent1"></sequenceFlow>
+</subProcess>
+```
+
+### CallActivity 调用活动
+
+调用活动和普通子流程不同，它能够通过流程ID调用外部流程作为当前流程的子流程，能够起到子流程复用的作用。
+
+![](res/14.png)
+
+```xml
+<callActivity id="callactivity1" name="Call activity" calledElement="errorStartProcess"></callActivity>
+```
+
+BPMN属性：
+
+* `calledElement`：外部流程的ID
+
+Activiti扩展属性：
+
+* `activiti:in`：调用外部流程传入变量名
+* `activiti:out`：调用外部流程结果变量名
+
+### EventSubprocess 事件子流程
+
+事件子流程和普通子流程的区别是事件子流程只能通过事件来触发。
+
+下面例子中，我们的流程通过异常边界事件来捕获异常，并让一个事件子流程来处理，事件子流程的启动事件是异常启动事件。
+
+![](res/15.png)
+
+```xml
+<boundaryEvent id="boundaryerror" name="Error" attachedToRef="servicetask">
+  <errorEventDefinition errorRef="ERR_01"></errorEventDefinition>
+</boundaryEvent>
+```
+
+### TransactionSubprocess 事务子流程
+
+事务子流程具有ACID特性，能够保证整个子流程要么全部成功，有一个失败就全部回滚。
+
+![](res/16.png)
+
+## Boundary Event 边界事件
+
+边界事件是一种捕获型事件，能够捕获定时器、异常等信息，然后中断当前流程，让流程转向边界事件的后续输出流。Activiti中定义了如下几种边界事件：
+
+* 定时器边界事件 TimerBoundaryEvent
+* 异常边界事件 ErrorBoundaryEvent
+* 消息边界事件 MessageBoundaryEvent
+* 取消边界事件 CancelBoundaryEvent
+* 补偿边界事件 CompensationBoundaryEvent
+* 信号边界事件 SignalBoundaryEvent
+
+### TimerBoundaryEvent 定时器边界事件
+
+定时器边界事件可以附加在用户任务、子流程等上，在任务执行完成后开始倒计时，倒计时结束执行边界事件后续流程。
+
+![](res/17.png)
+
+下面例子的定时器边界事件，设定了5分钟计时：
+
+```xml
+<boundaryEvent id="boundarytimer1" name="Timer" attachedToRef="usertask1" cancelActivity="true">
+  <timerEventDefinition>
+    <timeDuration>PT5M</timeDuration>
+  </timerEventDefinition>
+</boundaryEvent>
+```
+
+BPMN属性：
+
+* `cancelActivity`：任务未处理完而触发边界事件时，是否取消原任务
+
+### ErrorBoundaryEvent 异常边界事件
+
+异常边界事件能够捕获子流程或Java任务代码抛出的异常，这里的异常指Activiti业务异常，具有一个指定的错误码，而不是代码报错等其他情况。
+
+![](res/18.png)
+
+异常边界事件需要指定一个错误码，比如我们可以在Java任务种手动抛出一个`org.activiti.engine.delegate.BpmnError`类型，并指定错误码，那么捕获对应错误码的异常边界事件就能够触发。
+
+抛出异常的Java代码：
+```java
+package com.ciyaz.demo.activiti.service;
+
+import org.activiti.engine.delegate.BpmnError;
+import org.activiti.engine.delegate.DelegateExecution;
+import org.activiti.engine.delegate.JavaDelegate;
+
+public class MyServiceTask implements JavaDelegate {
+	@Override
+	public void execute(DelegateExecution execution) throws Exception {
+		throw new BpmnError("ERR_01");
+	}
+}
+```
+
+异常边界事件定义：
+```xml
+<boundaryEvent id="boundaryerror" name="Error" attachedToRef="servicetask">
+  <errorEventDefinition errorRef="ERR_01"></errorEventDefinition>
+</boundaryEvent>
+```
+
+### CompensationBoundaryEvent 补偿边界事件
+
+补偿边界事件用于事务子流程，用于事务执行失败，回滚时的补偿操作。
+
+![](res/19.png)
+
+```xml
+<boundaryEvent id="boundarycompensation1" name="Compensate" attachedToRef="servicetask1" cancelActivity="true">
+  <compensateEventDefinition></compensateEventDefinition>
+</boundaryEvent>
+```
+
+## IntermediateEvent 中间事件
+
+中间事件分为两种：
+
+* 中间抛出事件
+* 中间捕获事件
+
+中间抛出事件能够抛出一些信息，供中间捕获事件等节点接收。Activiti中定义了如下几种中间抛出事件：
+
+* 信号抛出事件 SignalThrowingEvent
+* 补偿抛出事件 CompensationThrowingEvent
+* 空中间抛出事件 NoneThrowingEvent
+
+中间捕获事件能够让流程“阻塞”，直到满足某一条件后，再继续执行。Activiti中定义了如下几种中间捕获事件：
+
+* 定时器捕获事件 TimerCatchingEvent
+* 信号捕获事件 SignalCatchingEvent
+* 消息捕获事件 MessageCatchingEvent
+
+### 信号抛出和捕获
+
+信号抛出事件能够抛出一个信号（Signal），而信号捕获事件能够监听一个信号。
+
+下面例子中，上方分支会抛出信号，下方分支接收到信号后，才能继续执行。
+
+![](res/20.png)
+
+```xml
+<intermediateThrowEvent id="signalintermediatethrowevent1" name="SignalThrowEvent">
+  <signalEventDefinition signalRef="flag"></signalEventDefinition>
+</intermediateThrowEvent>
+<intermediateCatchEvent id="signalintermediatecatchevent1" name="SignalCatchEvent">
+  <signalEventDefinition signalRef="flag"></signalEventDefinition>
+</intermediateCatchEvent>
+```
+
+这里，我们使用的信号名为`flag`。
+
+注：信号是Activiti中的一个概念，可以是全局的，也可以是流程实例局部的，用于触发事件等。
+
+## Listener 监听器
+
+监听器是Activiti的扩展功能，相当于在工作流程的各个生命周期中插入了一些钩子函数。Activiti中监听器分为两类：
+
+* 执行监听器：监听流程、任务、事件等启动、结束
+* 用户任务监听器：监听用户任务创建、分配、完成
