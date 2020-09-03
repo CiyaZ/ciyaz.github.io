@@ -1,5 +1,7 @@
 # Django简介和环境搭建
 
+**Django：按时交付完美主义者的 Web 框架**
+
 Django是一个Python的web开发开源框架，最初诞生于2005年。Django是一个基于MVC模式的框架，但是程序员在使用Django时，控制器接受用户输入的部分是由框架自行处理的，因此Django开发中程序员更关注模型（Model）、模板（Template）、视图（View），即MTV。控制器部分由Django框架实现，程序员只需要配置URLconf。
 
 教程和文档都在Django官方网站可以找到：
