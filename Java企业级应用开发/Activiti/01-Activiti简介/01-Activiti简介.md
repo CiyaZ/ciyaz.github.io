@@ -69,3 +69,5 @@ jBPM是另一个工作流框架，是Activiti的同类产品，在Activiti流行
 jBPM和Activiti这两个框架都保持着积极的更新，也都有巨大的用户量，功能上也是各有特色。Activiti基于Apache v2协议开源，我们可以免费使用。
 
 Activiti官网地址：[https://www.activiti.org/](https://www.activiti.org/)
+
+参考文档：[https://www.activiti.org/5.x/userguide/](https://www.activiti.org/5.x/userguide/)
