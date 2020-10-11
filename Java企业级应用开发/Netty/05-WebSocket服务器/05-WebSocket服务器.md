@@ -271,3 +271,36 @@ window.onload = function () {
 ## 关于protobuf
 
 实际上，我们也可以用WebSocket来传输protobuf序列化的二进制数据，protobuf比文本的json更加高效一些，但大多数情况Json已经足够使用了，而且文本格式方便调试，这里就不多介绍了。
+
+## 关于帧长度
+
+我们知道WebSocket虽然是基于消息的协议，而且也没有具体限制消息报文的大小，但消息也不能是无限长的，否则无论是网络可靠性，还是服务端内存，都是无法支撑的。
+
+Netty默认WebSocket的最大消息大小是65535字节（64KB），这已经够大了，因此不建议再调的更大，客户端最好不要一次发送过大的消息，而是应在应用层上划分数据。比如传送一个较大的二进制图片，那么实际上我们可以将图片划分为若干个消息报文，每段报文注明所包含字节的偏移量，由接收端负责组装。
+
+Netty中，如果向服务端发送了一个超过64KB的消息，WebSocket连接会立即断开并报错。
+
+```
+io.netty.handler.codec.http.websocketx.CorruptedWebSocketFrameException: Max frame length of 65536 has been exceeded.
+	at io.netty.handler.codec.http.websocketx.WebSocket08FrameDecoder.protocolViolation(WebSocket08FrameDecoder.java:426)
+	at io.netty.handler.codec.http.websocketx.WebSocket08FrameDecoder.decode(WebSocket08FrameDecoder.java:286)
+	at io.netty.handler.codec.ByteToMessageDecoder.decodeRemovalReentryProtection(ByteToMessageDecoder.java:505)
+	at io.netty.handler.codec.ByteToMessageDecoder.callDecode(ByteToMessageDecoder.java:444)
+	at io.netty.handler.codec.ByteToMessageDecoder.channelRead(ByteToMessageDecoder.java:283)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:374)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:360)
+	at io.netty.channel.AbstractChannelHandlerContext.fireChannelRead(AbstractChannelHandlerContext.java:352)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.channelRead(DefaultChannelPipeline.java:1421)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:374)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeChannelRead(AbstractChannelHandlerContext.java:360)
+	at io.netty.channel.DefaultChannelPipeline.fireChannelRead(DefaultChannelPipeline.java:930)
+	at io.netty.channel.nio.AbstractNioByteChannel$NioByteUnsafe.read(AbstractNioByteChannel.java:163)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:697)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:632)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:549)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:511)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:918)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.lang.Thread.run(Thread.java:748)
+```
