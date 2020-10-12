@@ -14,9 +14,9 @@ free -h
 
 ![](res/1.png)
 
-* total：总内存
-* used：已使用内存
-* free：空闲内存
-* shared：不同应用的相同数据
-* buffers：用于缓冲磁盘块的内存大小
-* cached：当前缓存的内存页
+* `total` 总申请的内存
+* `used` 使用中的内存
+* `free` 空闲内存
+* `shared` 共享内存，即不同应用的相同数据
+* `buffers` 用于缓冲磁盘块的内存大小
+* `cached` 当前缓存的内存页
