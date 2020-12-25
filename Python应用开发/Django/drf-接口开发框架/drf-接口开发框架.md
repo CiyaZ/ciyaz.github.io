@@ -255,11 +255,11 @@ drf对请求对象做了封装，使用`request.query_params`能够得到请求�
 @api_view(['POST'])
 def add_book(request):
     req_data = request.data
-    category_id = req_data['category_id']
+    category_id = req_data.get('category_id')
     category = Category.objects.get(pk=category_id)
-    authors_id = req_data['authors_id']
+    authors_id = req_data.get('authors_id')
 
-    book = Book(name=req_data['name'], isbn=req_data['isbn'], publish_time=now(), category=category)
+    book = Book(name=req_data.get('name'), isbn=req_data.get('isbn'), publish_time=now(), category=category)
     book.save()
 
     for author_id in authors_id:
