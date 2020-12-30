@@ -430,3 +430,9 @@ REST_FRAMEWORK = {
 这部分由于封装耦合度过高，在实际开发中，其实很难用起来，就不再介绍了。
 
 RESTful是个理想状态下的设计，并不是完全切合实际需求的，我们的实际项目需要考虑很多额外的东西，这种情况下drf中这些高度封装的组件可扩展性就不够理想了。
+
+## 关于CamelCase问题
+
+在实际使用DRF开发中，其实有一个问题：Python的代码规范是`Snake case`的，而我们主流的前后端语言，如JavaScript、Java等一般是`Camel case`的，使用HTTP协议与其它系统收发Json报文时，DRF默认生成的Json键也是小写下划线的形式，无论改哪一边，对代码风格破坏都比较大。
+
+自定义DRF的`Parser`和`Renderer`组件能够统一解决这个问题，实际上有现成的轮子可用，我们不必再自己写了：[https://github.com/vbabiy/djangorestframework-camel-case](https://github.com/vbabiy/djangorestframework-camel-case)
