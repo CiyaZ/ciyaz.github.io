@@ -4,6 +4,8 @@ JavaFX是一个跨平台的现代化GUI框架，2008年Sun公司推出JavaFX时�
 
 这里我们基于JDK11和Maven介绍JavaFX框架，注意JDK11和老版本（指JDK8及以下）有较大的区别，JDK8中包含了JavaFX而JDK11没有。
 
+补充：JDK11移除了JavaFX，这其实有点问题，因为面向普遍安装了JDK的用户开发软件时，要额外带着JavaFX的运行时，这造成了打包体积更大的问题。
+
 ## JavaFX优缺点和适用场景
 
 JavaFX优点非常明显，它完全是一个现代化设计的桌面GUI框架（相对Swing/SWT来说），而且是跨平台的。使用FXML、CSS进行视图布局以及规范的MVC开发模式，它和QML、WPF可以算是同类技术。
