@@ -8,22 +8,28 @@ Requests是一个辅助http操作的函数库，原本python内置了`urllib`，
 
 ### 请求网页
 
-GET请求html例子
+GET请求HTML例子：
+
 ```python
-r = requests.get("http://www.baidu.com")
+import requests
+
+params = {'wd': '美女'}
+
+r = requests.get("http://www.baidu.com/s", params=params)
 r.encoding = "utf-8"
 print(r.text)
 ```
 
-* `requests.get()`会发起GET请求，返回值是一个响应（response）对象
+* `requests.get()`会发起GET请求，返回值是一个响应（response）对象，`params`为URL参数
 * `r.encoding`可以更改读取返回值时使用的文本编码
 * `r.text`读取响应的文本内容
 
-同理，HTTP的post，delete，head，options的请求使用也是一样的。
+同理，HTTP的post，delete，head，options的请求使用也是类似的。
 
 ### 请求图片
 
 请求二进制数据的例子：
+
 ```python
 r = requests.get("https://www.baidu.com/img/bd_logo1.png")
 
