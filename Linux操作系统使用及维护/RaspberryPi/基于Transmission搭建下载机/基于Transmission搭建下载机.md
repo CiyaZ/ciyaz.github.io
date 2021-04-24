@@ -43,3 +43,13 @@ sudo systemctl stop transmission-daemon
 在弹出对话框中上传`.torrent`种子文件，或者直接输入磁力链，就可以下载了。
 
 ![](res/3.png)
+
+## Transmission Web Control
+
+Transmission原版的管理界面功能过于简陋，Github上有一个国人开发的`transmission-web-control`非常好用，安装后会自动覆盖原版GUI，不喜欢也支持还原，推荐安装试试。
+
+界面是用EasyUI开发的，我个人非常喜欢这种风格。
+
+[https://github.com/ronggang/transmission-web-control](https://github.com/ronggang/transmission-web-control)
+
+![](res/4.png)
