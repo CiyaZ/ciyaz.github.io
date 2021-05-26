@@ -57,7 +57,7 @@ eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6InRlc3QiLCJ
 
 ### 签名 Signature
 
-签名是对Header和Payload的签名，签名算法在Header中标识。签名密钥由服务端保管，签名的目的是防篡改（如何不签名，客户端可以篡改payload，就能够随意切换成其它用户了）。
+签名是对Header和Payload的签名，签名算法在Header中标识。签名密钥由服务端保管，签名的目的是防篡改（如果不签名，客户端可以篡改payload，就能够随意切换成其它用户了）。
 
 ## HTTP请求头
 
