@@ -42,3 +42,25 @@ status:
 * `spec.ports[].port`：集群内部提供服务的端口
 * `spec.ports[].targetPort`：容器的端口
 * `spec.ports[].nodePort`：在Node上打开的可供外部访问的端口，如未指定，则随机选择一个
+
+## Service相关操作
+
+通过yaml配置文件部署Service：
+```
+kubectl apply -f <yaml配置文件>
+```
+
+查看当前所有Service：
+```
+kubectl get svc
+```
+
+查看Service详细信息：
+```
+kubectl describe svc <Service名称>
+```
+
+删除Service：
+```
+kubectl delete svc <Service名称>
+```

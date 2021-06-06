@@ -27,10 +27,22 @@ kubectl get pod
 
 查看Pod详细信息：
 ```
-kubectl describe pod <Pod名字>
+kubectl describe pod <Pod名>
 ```
 
 如果Pod出现异常情况，我们可以根据以上命令的返回结果来排除故障。
+
+查看Pod日志（标准输出的内容）：
+```
+kubectl logs <Pod名>
+```
+
+对于一般的应用程序，日志通常不是直接打印在标准输出上的，而是记录在日志文件中，这种情况一般需要进入容器查看，或者去挂载的日志目录查看。
+
+进入Pod执行Bash命令：
+```
+kubectl exec -it <Pod名> bash
+```
 
 至于Pod的创建、删除、伸缩等操作，一般都是通过操作Deployment来实现，Pod的具体操作由k8s来自动执行。
 

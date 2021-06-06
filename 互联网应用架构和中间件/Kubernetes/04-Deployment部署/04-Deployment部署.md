@@ -33,13 +33,50 @@ spec:
 
 上面配置中，我们可以看到，其实`template`中定义的就是Pod相关的内容。`spec.selector`需要能够匹配`spec.template.metadata.labels`，这样才能正常部署。
 
+# Deployment基本操作
+
+通过yaml配置文件部署Deployment：
+```
+kubectl apply -f <yaml配置文件>
+```
+
+`kubectl create`和`kubectl apply`的区别：
+
+* `create`：删除现有的组件，根据配置文件重新生成
+* `apply`：根据配置文件升级现有的组件
+
+查看当前所有Deployment：
+```
+kubectl get deployment
+```
+
+查看Deployment详细信息：
+```
+kubectl describe deployment <Deployment名称>
+```
+
+删除Deployment：
+```
+kubectl delete deployment <Deployment名称>
+```
+
+注：删除Deployment后，对应Pod会自动销毁、删除。
+
+## 重新部署
+
+实际的线上环境因为情况非常复杂，我们可能遇到部署失败的情况，有时我们希望已有的Deployment重新尝试部署，可以使用如下命令实现：
+
+```
+kubectl rollout restart deployment <Deployment名称>
+```
+
 ## 升级和回退版本
 
 k8s能够按照一定的策略进行弹性升级，这里我们以上面部署的`nginx`为例进行操作。
 
 查看升级操作状态：
 ```
-kubectl rollout status deployment nginx-deploy
+kubectl rollout status deployment <Deployment名称>
 ```
 
 输出结果例子：
@@ -57,7 +94,7 @@ deployment "nginx-deploy" successfully rolled out
 
 查看升级操作历史：
 ```
-kubectl rollout history deployment nginx-deploy
+kubectl rollout history deployment <Deployment名称>
 ```
 
 输出结果例子：
@@ -68,12 +105,12 @@ REVISION  CHANGE-CAUSE
 2         <none>
 ```
 
-升级到指定镜象版本：
+升级到指定镜象版本例子：
 ```
 kubectl set image deployment nginx-deploy nginx=nginx:1.20.1
 ```
 
-回退到指定版本：
+回退到指定版本例子：
 ```
 kubectl rollout undo deployment nginx-deploy --to-revision=1
 ```
